@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SceneSettings>
+	<easy initSpeedMultiplier = "1" vides = "10" timeDivision = "1">
+	</easy>
+	<medium initSpeedMultiplier = "2" vides = "5" timeDivision = "1.5">
+	</medium>
+	<hard initSpeedMultiplier = "3" vides = "1" timeDivision = "2.5">
+	</hard>
+        
+</SceneSettings>
