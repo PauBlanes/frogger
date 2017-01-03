@@ -3,6 +3,7 @@
 #include "Player.hh"
 #include "GameScene.hh"
 #include "GUI.hh"
+#include "RankingsScene.hh"
 
 Player::Player() {
 	playerSprite = { { (WIDTH >> 1),HEIGHT-120, WIDTH / 15, 30 },ObjectID::PJBASIC};
@@ -41,6 +42,8 @@ void Player::Die() {
 	GUI::DrawTextBlended<FontID::ARIAL>("YOU DIE!",
 	{ int(W.GetWidth()*0.35), int(W.GetHeight()*0.5f), 2, 2 },
 	{ 115, 0, 180 });
+
+	SM.SetCurScene<RankingsScene>();
 }
 
 void Player::DetectCollision(Vehiculo collider) {

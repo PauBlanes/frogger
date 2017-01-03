@@ -24,8 +24,10 @@
     <ClCompile Include="GameScene.cc" />
     <ClCompile Include="Granota.cc" />
     <ClCompile Include="Insecto.cc" />
+    <ClCompile Include="IOManager.cc" />
     <ClCompile Include="main.cc" />
     <ClCompile Include="Player.cc" />
+    <ClCompile Include="RankingsScene.cc" />
     <ClCompile Include="StartScene.cc" />
     <ClCompile Include="Tronc.cc" />
     <ClCompile Include="Vehiculo.cc" />
@@ -44,6 +46,7 @@
     <ClInclude Include="Logger.hh" />
     <ClInclude Include="ID.hh" />
     <ClInclude Include="Player.hh" />
+    <ClInclude Include="RankingsScene.hh" />
     <ClInclude Include="Renderer.hh" />
     <ClInclude Include="Resource.hh" />
     <ClInclude Include="Scene.hh" />

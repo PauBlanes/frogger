@@ -4,6 +4,7 @@
 #include "Tronc.hh"
 #include "Insecto.hh"
 
+
 class  Player
 {
 	friend class GameScene;

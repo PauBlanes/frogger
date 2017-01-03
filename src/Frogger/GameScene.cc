@@ -135,7 +135,7 @@ void GameScene::Update(void) {
 	}
 
 	
-	cout << pj.playerSprite.transform.y << endl;
+	
 	//aqui comprovem si esta en una casella que no pertany a larray.
 	if (pj.playerSprite.transform.y < 188) { //si esta a la alçada de la pantalla que toca
 		//std::cout << casellaFinalBona << std::endl;

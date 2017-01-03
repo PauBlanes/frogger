@@ -11,7 +11,7 @@
 #include "GameScene.hh"
 #include "StartScene.hh"
 #include "DifficultyScene.hh"
-
+#include "RankingsScene.hh"
 
 #pragma endregion TODO
 
@@ -56,6 +56,7 @@ namespace GameEngine {
 		SM.AddScene<GameScene>();
 		SM.AddScene<StartScene>();
 		SM.AddScene<DifficultyScene>();
+		SM.AddScene<RankingsScene>();
 		SM.SetCurScene<StartScene>();
 		
 //		
