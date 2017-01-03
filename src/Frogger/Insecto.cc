@@ -6,7 +6,10 @@
 Insecto::Insecto() {
 	insectSprite = { { 25 ,128, WIDTH / 15, 30 },ObjectID::INSECT };
 	waitTime = 0;
-	lastPos = Pos1;
+
+	insectPositions = { 25,190,355,520,680 };
+	lastPos = -1; //aixi la primera vegada que instanciem l'insecte ens deixa fer-ho perque newPos != lastPos;
+
 	srand(time(NULL));
 }
 
@@ -17,28 +20,11 @@ void Insecto::Move() {
 	if (waitTime > 0)
 		waitTime -= TM.GetDeltaTime() / 1000;
 	else {
-		newPos = (insectPos)(rand() % 6);
-		if (newPos != lastPos) {
-			switch (newPos)
-			{
-			case Pos1:
-				insectSprite.transform.x = 25;
-				break;
-			case Pos2:
-				insectSprite.transform.x = 190;
-				break;
-			case Pos3:
-				insectSprite.transform.x = 355;
-				break;
-			case Pos4:
-				insectSprite.transform.x = 520;
-				break;
-			case Pos5:
-				insectSprite.transform.x = 680;
-				break;
-			}
+		newPos = rand() % insectPositions.size();
+		if (newPos != lastPos) { //aixo es per no repetir posicions
+			insectSprite.transform.x = insectPositions[newPos];
 			waitTime = 5;
-			lastPos = newPos;
+			lastPos = newPos;		
 		}
 
 	}

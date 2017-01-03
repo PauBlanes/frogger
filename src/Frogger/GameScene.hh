@@ -44,7 +44,7 @@ private:
 
 	Insecto insect;
 	
-	float counterLinia1; //aixo es per tenir diferents cooldowns depenent de les linies i que no sempre els spawns siguin
+	float counterLinia1; //aixo es per tenir diferents cooldowns depenent de les linies de la carretera i així no tots els vehicles estaran igual de junts.
 	float counterLinia2;
 	float counterLinia3;
 	float counterLinia4;
@@ -52,15 +52,14 @@ private:
 	
 	std::vector<Vehiculo> vehicleArray;
 	std::vector<Tronc> troncArray;
+
 	std::vector<Granota> GranotaArray;
+	std::vector<std::pair<int, int>> limitRana; //aquest array conte les minX i maxX dels forats.
+	int RanaNum; //amb aquest numero sabrem si has salvat totes les granotes	
+	int arrayPos; //utilitzarem aquest int per borrar en un index del vector les coordenades del forat en el que hem entrat.
+	bool casellaFinalBona; 
 
-	std::vector<std::pair<int, int>> limitRana;
-	int RanaNum;
-	bool casellaFinalBona;
-	int arrayPos;
-
-	bool aCapTronc;
-
+	bool aCapTronc; //aquest bool nomes es false si no estàs tocant cap tronc de la escena. Si és false comprovarem si estàs tocant el riu.
 	
 
 	Player pj;

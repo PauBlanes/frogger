@@ -1,10 +1,10 @@
 #pragma once
 #include "Sprite.hh"
-
-enum insectPos { Pos1, Pos2, Pos3, Pos4, Pos5};
+#include <vector>
 
 class Insecto {
-	friend class Player;
+	friend class Player; //per poder accedir al sprite del insecte sense fer-lo public.
+	friend class GameScene;//Això es perque quan comprovem des del GameScene si estàs colisionant un insecte poguem posar el contador de temps a 0 perquè salti a una altra posicio.
 public:
 	Insecto();
 	void Move();
@@ -12,6 +12,7 @@ public:
 private:
 	Sprite insectSprite;
 	float waitTime;
-	insectPos lastPos;
-	insectPos newPos;
+	std::vector<int> insectPositions;
+	int lastPos;
+	int newPos;
 };

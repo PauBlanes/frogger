@@ -14,21 +14,22 @@ Player::Player() {
 void Player::Move() {
 	
 	if (IM.IsKeyDown<'w'>() && playerSprite.transform.y - HEIGHT / 16 >100) {
-		playerSprite.transform.y -= HEIGHT / 16;	
+		playerSprite.transform.y -= HEIGHT / 16;
+		playerX = (float)playerSprite.transform.x;
 		movimentSegur = true;
 	}
-	if (IM.IsKeyDown<'s'>() && playerSprite.transform.y + HEIGHT / 16 < HEIGHT-100) {
-		
+	if (IM.IsKeyDown<'s'>() && playerSprite.transform.y + HEIGHT / 16 < HEIGHT-100) {		
 		playerSprite.transform.y += HEIGHT / 16;
+		playerX = (float)playerSprite.transform.x;
 	}
-	if (IM.IsKeyDown<'a'>() && playerSprite.transform.x - WIDTH/10 > 0) {
-		
+	if (IM.IsKeyDown<'a'>() && playerSprite.transform.x - WIDTH/10 > 0) {		
 		playerSprite.transform.x -= WIDTH/10;
+		playerX = (float)playerSprite.transform.x;
 	}
-	if (IM.IsKeyDown<'d'>() && playerSprite.transform.x + playerSprite.transform.w + WIDTH/10 < WIDTH) {
-		
+	if (IM.IsKeyDown<'d'>() && playerSprite.transform.x + playerSprite.transform.w + WIDTH/10 < WIDTH) {		
 		playerSprite.transform.x += WIDTH/10;
-	}	
+		playerX = (float)playerSprite.transform.x;
+	}
 		
 }
 
@@ -61,6 +62,9 @@ void Player::DetectCollision(Vehiculo collider) {
 }
 
 bool Player::DetectTronc(Tronc elTronc) {
+
+	
+
 	if (playerSprite.transform.y >= elTronc.tSprite.transform.y && playerSprite.transform.y <= elTronc.tSprite.transform.y + elTronc.tSprite.transform.h
 		&& playerSprite.transform.x >= elTronc.tSprite.transform.x && playerSprite.transform.x <= elTronc.tSprite.transform.x + elTronc.tSprite.transform.w) {
 		if (IM.IsKeyDown<'d'>()) {
@@ -72,7 +76,8 @@ bool Player::DetectTronc(Tronc elTronc) {
 			playerSprite.transform.x = (int)playerX;
 		}
 		else {
-			playerX -= 0.1* TM.GetDeltaTime() *elTronc.direction * GameScene::initMultiplierSpeed; //per alguna rao si en comptes de posar 0.1 poso speed no va. A més em teletransporta a llocs raros
+			//std::cout << playerX << std::endl;			
+			playerX -= elTronc.speed * TM.GetDeltaTime() *elTronc.direction; //per alguna rao si en comptes de posar 0.1 poso speed no va. A més em teletransporta a llocs raros
 			playerSprite.transform.x = (int)playerX;
 		}		
 		return true;

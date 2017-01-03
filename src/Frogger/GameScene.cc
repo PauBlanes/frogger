@@ -86,7 +86,7 @@ void GameScene::OnEntry(void) {
 	
 	//Aquests son les xs dels forats del final
 	limitRana = { { 20,85 },{ 185,250 },{ 345,410 },{ 505,575 },{ 670,735 } };
-	RanaNum = 0;
+	//RanaNum = 0;
 	casellaFinalBona = false;//aixo ens servira per saber si estema  uan casella final nova o no
 	arrayPos = 0;
 
@@ -124,55 +124,65 @@ void GameScene::Update(void) {
 			aCapTronc = false;
 		
 	}
-	if(aCapTronc && pj.playerSprite.transform.y >= 189 )//comprovar xs pels forats
+	if(aCapTronc && pj.playerSprite.transform.y >= 189 )//si el jugador no està colisionant amb cap tronc llavors mirem si colisiona amb el riu
 		pj.DetectRiu(AIGUA);
+		
 	
 	//Un cop he detectat colisons sabre si me mogut a casella segura o no
-	if (pj.movimentSegur && pj.playerSprite.transform.y > 189) {
+	if (pj.movimentSegur && pj.playerSprite.transform.y > 188) {
 		score += 10;
 		pj.movimentSegur = false;
 	}
 
-	///////////////////////////////////////////////**///////////////////////////////////////////////////////////	
 	
+	cout << pj.playerSprite.transform.y << endl;
 	//aqui comprovem si esta en una casella que no pertany a larray.
-	if (pj.playerSprite.transform.y < 170) {
-		std::cout << casellaFinalBona << std::endl;
-		for (auto i : limitRana) {
-			arrayPos = (arrayPos +1)%5;
+	if (pj.playerSprite.transform.y < 188) { //si esta a la alçada de la pantalla que toca
+		//std::cout << casellaFinalBona << std::endl;
+		for (auto i : limitRana) { 
+			arrayPos = (arrayPos +1)%5; //utilitzarem aquest numero per borrar les coordenades del forat en que has entrat, així si entres en un forat que ja has entrat moriras.
+			
 			std::cout << i.first << "," << i.second << std::endl;
 			std::cout << pj.playerSprite.transform.x << std::endl;
-			if (pj.playerSprite.transform.x >= i.first && pj.playerSprite.transform.x + pj.playerSprite.transform.w <= i.second) {
-				std::cout << "Hola" << std::endl;
-				int pos = i.first;
-				InsertGranota(pos, 120, WIDTH / 15, 50);
+			if (pj.playerSprite.transform.x >= i.first && pj.playerSprite.transform.x + pj.playerSprite.transform.w <= i.second) { //comprovem per a cada un dels forats buits				
+				
+				InsertGranota(i.first, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
 				pj.playerSprite.transform.x = (WIDTH >> 1);
 				pj.playerSprite.transform.y = HEIGHT - 120;
-				pj.movimentSegur = false;
+				pj.movimentSegur = false; //no volem que també tinguis els 10 punts per aquest moviment perque ja estàs aconseguint els 50 per arrivar al final
 				RanaNum++;
 				casellaFinalBona = true;
-				//limitRana.erase(limitRana.begin() + arrayPos);
-				score += 50;
+				limitRana.erase(limitRana.begin() + arrayPos); //borrem les Xs d'aquest forat perquè ja no sigui segur.
+				if (pj.DetectInsecte(insect)) {
+					insect.waitTime = 0; //el fem saltar a una altra posicio inmediatament
+					insect.insectPositions.erase(insect.insectPositions.begin() + arrayPos);//com que aquest array està ordenat igual que el de minX i maxX dels forats podem borrar el mateix index pq l'insecte noe s pinti a caselles on ja hi ha granota.
+					score += 200;
+				}					
+				else
+					score += 50;
+
 				if (RanaNum == 5) {
 					score += 1000;
 					RanaNum = 0;
 				}
 			}
 		};
-
-		if (casellaFinalBona == false && !pj.DetectInsecte(insect)) {
-			pj.playerSprite.transform.x = (WIDTH >> 1);
-			pj.playerSprite.transform.y = HEIGHT - 120;
-			pj.vides -= 1;
+		
+		if (casellaFinalBona == false) { //hem de posar això fora del for perquè primer comprovi el if amb tots els forats.
+			if (pj.vides > 0) {
+				pj.playerSprite.transform.x = (WIDTH >> 1);
+				pj.playerSprite.transform.y = HEIGHT - 120;
+				pj.vides -= 1;
+			}
+			else
+				pj.Die();
+			
 		}
 		else
 			casellaFinalBona = false;
 	}
-	if (pj.vides <= 0)
-	{
-		pj.Die();
-	}
-	////////////////////////////////////////**/////////////////////////////////////////////
+	
+	
 
 }
 
@@ -192,14 +202,14 @@ void GameScene::Draw(void) {
 	for (int i = 0;i < troncArray.size();i++) {
 		troncArray[i].Draw();
 	}
-	/////////////////////////////////**///////////////////////////////////
+
+	//Pintar L'insecte
+	insect.Draw();
+
+	//pintar Granotes
 	for (int i = 0; i < GranotaArray.size(); i++) {
 		GranotaArray[i].Draw();
 	}
-	/////////////////////////////////////////////////////////////////////
-
-	//L'insecte
-	insect.Draw();
 
 	 //El personatge
 	 pj.Draw();
