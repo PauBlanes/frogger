@@ -13,8 +13,7 @@
 #include "Assert.hh"
 #include "Resource.hh"
 
-#include <sstream>
-#include <bitset>
+#include "RankingsScene.hh"
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,8 +30,8 @@ namespace IOManager {
 	//Llegir un fitxer xml
 	std::vector<string> ReadXML(string &&, string );
 	//Escriure a un fitxer binari
-	void WriteBin(const string &, string , int );
+	void WriteBin(const string &, userRank);
 	//Llegir d'un fitxer binari
-	string ReadBin(const string &);
+	void ReadBin(const string &);
 	
 }

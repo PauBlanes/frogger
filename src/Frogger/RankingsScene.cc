@@ -9,8 +9,12 @@ RankingsScene::~RankingsScene(void) {
 }
 
 void RankingsScene::OnEntry(void) {
-	IOManager::WriteBin("../../res/cfg/rankings.bin", "Manuel", GameScene::score);
-	cout << IOManager::ReadBin("../../res/cfg/rankings.bin") << endl;
+
+	user1.userName = "Manuel";
+	user1.score = GameScene::score;
+	IOManager::WriteBin("../../res/cfg/rankings.bin", user1);
+	IOManager::ReadBin("../../res/cfg/rankings.bin");
+	
 }
 
 void RankingsScene::OnExit(void) {

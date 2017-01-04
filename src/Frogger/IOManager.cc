@@ -31,49 +31,36 @@ std::vector<string> IOManager::ReadXML(string &&filename, string difficulty) {
 	return info;
 }
 
-void IOManager::WriteBin(const string &filename, string userName, int score) {
+void IOManager::WriteBin(const string &filename, userRank u1) {
 
-	char const*newEntry;
-	userName.append(to_string(score)); //ajuntem el nom i el numero
-
-	ofstream file(filename, ios::out | ios::binary); //obrim un archiu per escriure en binari i de tipo append per poder escriure al final i no xafar-ho tot cada cop
-
-	if (file.is_open())
+	ofstream fsalida(filename, ios::out | ios::binary); //obrim un archiu per escriure en binari i de tipo append per poder escriure al final i no xafar-ho tot cada cop
+	
+	if (fsalida.is_open())
 	{
-
-		newEntry = new char[userName.size()];
-		newEntry = userName.c_str(); //convertim a char* perque es el que ens demana el write.
-		file.write(newEntry, sizeof(newEntry));
-		file.close();
+		fsalida.write(reinterpret_cast<char*>(&u1), sizeof(u1));
+		fsalida.close();
+		
+		
 	}
 	else cout << "Unable to open file for writing\n";
 
 }
 
-string IOManager::ReadBin(const string &filename) {
+void IOManager::ReadBin(const string &filename) {
 	
-	streampos size;
-	char * memblock;
-	string temp;
+	
 
-	ifstream file(filename, ios::in | ios::binary | ios::ate); //ate per posarnos al final del archiu i tenir el tamany
-	if (file.is_open())
-	{
-
-		size = file.tellg(); //amb aixo tindrem el tamany del archiu pq estem a la ultima posicio.
-		memblock = new char[size];
-		file.seekg(0, ios::beg);
-		file.read(memblock, size);
-		file.close();
-		for (int i = 0; i < size;i++) {
-			char c = static_cast<char>(std::bitset<6>(memblock[i]).to_ulong() + 64);
-			temp += c;
-		}		
-
-		delete[] memblock;
+	ifstream fentrada(filename, ios::in | ios::binary); //ate per posarnos al final del archiu i tenir el tamany
+	
+	if (fentrada.is_open())
+	{	
+		userRank tempUser;
+		fentrada.read(reinterpret_cast<char*>(&tempUser), sizeof(tempUser));
+		fentrada.close();
+		
+		cout << sizeof(tempUser) << endl;
+		
 	}
-	else cout << "Unable to open file for reading\n";
-
-	return temp;
+	else cout << "Unable to open file for reading\n";	
 	
 }
