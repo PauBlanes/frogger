@@ -28,10 +28,10 @@ using namespace Logger;
 namespace IOManager {
 
 	//Llegir un fitxer xml
-	std::vector<string> ReadXML(string &&, string );
+	vector<string> ReadXML(string &&, string );
 	//Escriure a un fitxer binari
 	void WriteBin(const string &, userRank);
 	//Llegir d'un fitxer binari
-	void ReadBin(const string &);
+	vector <userRank> ReadBin(const string &);
 	
 }

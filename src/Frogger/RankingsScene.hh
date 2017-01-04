@@ -1,12 +1,12 @@
 #pragma once
 #include "Scene.hh"
 #include "GameScene.hh"
-#include <string>
+
 
 struct userRank
 {
-	std::string userName;
-	int score;
+	char* userName;
+	int score;	
 };
 
 class RankingsScene : public Scene {
@@ -19,5 +19,8 @@ public:
 	void Draw(void) override;
 private:
 	userRank user1;
-	
+	userRank user2;
+	userRank user3;
+
+	std::vector <userRank> highScores;
 };

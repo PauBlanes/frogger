@@ -1,6 +1,6 @@
 #include "IOManager.hh"
 
-std::vector<string> IOManager::ReadXML(string &&filename, string difficulty) {
+vector<string> IOManager::ReadXML(string &&filename, string difficulty) {
 	std::vector<string> info;
 
 	cout << "Llegint les dades del nivell..." << endl;
@@ -33,32 +33,52 @@ std::vector<string> IOManager::ReadXML(string &&filename, string difficulty) {
 
 void IOManager::WriteBin(const string &filename, userRank u1) {
 
-	ofstream fsalida(filename, ios::out | ios::binary); //obrim un archiu per escriure en binari i de tipo append per poder escriure al final i no xafar-ho tot cada cop
-	
+	ofstream fsalida(filename, ios::out | ios::binary ||ios::app); //obrim un archiu per escriure en binari i de tipo append per poder escriure al final i no xafar-ho tot cada cop
+	userRank temp = u1;
 	if (fsalida.is_open())
 	{
-		fsalida.write(reinterpret_cast<char*>(&u1), sizeof(u1));
+		
+		fsalida.write(reinterpret_cast<char*>(&temp), sizeof(temp));				
 		fsalida.close();
 		
-		
+		ifstream fentrada(filename, ios::in | ios::binary | ios::app);
+		userRank tempUser;
+		cout << u1.score << endl;
+		fentrada.read(reinterpret_cast<char*>(&u1), sizeof(u1));
+		cout << u1.userName << ": " << u1.score << endl;
+		fentrada.close();
 	}
 	else cout << "Unable to open file for writing\n";
 
 }
 
-void IOManager::ReadBin(const string &filename) {
+vector<userRank> IOManager::ReadBin(const string &filename) {
 	
-	
-
-	ifstream fentrada(filename, ios::in | ios::binary); //ate per posarnos al final del archiu i tenir el tamany
+	ifstream fentrada(filename, ios::in | ios::binary |ios::app); //ate per posarnos al final del archiu i tenir el tamany
 	
 	if (fentrada.is_open())
-	{	
-		userRank tempUser;
-		fentrada.read(reinterpret_cast<char*>(&tempUser), sizeof(tempUser));
+	{
+		
+		vector<userRank>bestPlayers;
+		//int i = 0;
+		//while (i <3) {
+					
+			
+			userRank tempUser;
+			fentrada.read(reinterpret_cast<char*>(&tempUser), sizeof(tempUser));
+			bestPlayers.push_back(tempUser);
+			
+			cout << bestPlayers[0].userName << ": " << bestPlayers[0].score << endl;
+			
+			//cout << fentrada.tellg() << endl;
+			
+			//i++;	
+
+		//}
+		
 		fentrada.close();
 		
-		cout << sizeof(tempUser) << endl;
+		return bestPlayers;
 		
 	}
 	else cout << "Unable to open file for reading\n";	

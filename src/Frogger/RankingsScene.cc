@@ -10,10 +10,15 @@ RankingsScene::~RankingsScene(void) {
 
 void RankingsScene::OnEntry(void) {
 
-	user1.userName = "Manuel";
-	user1.score = GameScene::score;
-	IOManager::WriteBin("../../res/cfg/rankings.bin", user1);
-	IOManager::ReadBin("../../res/cfg/rankings.bin");
+	user1 = { "Manuel", 5 };
+	user2 = { "Paco", 18 };
+	user3 = { "Pau", 10 };
+	
+	//IOManager::WriteBin("../../res/cfg/rankings.bin", user1);
+//	IOManager::WriteBin("../../res/cfg/rankings.bin", user2);
+	IOManager::WriteBin("../../res/cfg/rankings.bin", user3);
+	
+//	IOManager::ReadBin("../../res/cfg/rankings.bin");
 	
 }
 
