@@ -33,11 +33,11 @@ vector<string> IOManager::ReadXML(string &&filename, string difficulty) {
 
 void IOManager::WriteBin(const string &filename, vector<userRank> highScorers, int rankPos) {
 
-	int posToInsert = sizeof(userRank) * (rankPos - 1); //la posicio del fitxer on anirà la nova informacio
-		
+	//int posToInsert = sizeof(userRank) * (rankPos - 1); //la posicio del fitxer on anirà la nova informacio
+	
 	ofstream fsalida(filename, ios::out | ios::binary); //obrim un archiu per escriure en binari ens posem al final per comprovar si hem d'insertar al final
-	fsalida.seekp(posToInsert); //ens movem a on volem insertar per no haver de reescriure tot el fitxer sencer cada cop, nomes a partir de la posicio que volem insertar
-	cout << "On insertar : " << fsalida.tellp() << endl;
+	//fsalida.seekp(posToInsert); //ens movem a on volem insertar per no haver de reescriure tot el fitxer sencer cada cop, nomes a partir de la posicio que volem insertar
+	
 	if (fsalida.is_open())
 	{
 		for (int i = 0; i < highScorers.size();i++) {
