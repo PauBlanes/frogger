@@ -5,7 +5,7 @@
 
 struct userRank
 {
-	char* userName;
+	char userName [5];
 	int score;	
 };
 
