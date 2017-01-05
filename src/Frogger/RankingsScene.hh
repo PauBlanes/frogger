@@ -20,11 +20,10 @@ public:
 	void OnExit(void) override;
 	void Update(void) override;
 	void Draw(void) override;
+	void UpdateRanking(void);
 private:
-	userRank user1;
-	userRank user2;
-	userRank user3;
-
+	userRank newUser;
+	
 	char getUserName[5];
 	std::vector <userRank> scoresToSend;
 	std::vector <userRank> highScores;

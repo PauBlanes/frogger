@@ -31,16 +31,13 @@ vector<string> IOManager::ReadXML(string &&filename, string difficulty) {
 	return info;
 }
 
-void IOManager::WriteBin(const string &filename, vector<userRank> highScorers, int rank) {
+void IOManager::WriteBin(const string &filename, vector<userRank> highScorers, int rankPos) {
 
-	//int userInfoSize = sizeof(userRank);
-	//int posToInsert = userInfoSize * (rank - 1); //la posicio del fitxer on anirà la nova informacio
-	//vector<userRank> newAndLowerRanks; //no utilitzem una cua perquè encara que ara l'anirem omplint per el final més endavant l'haurem de recórrer tot per tornar a escriure.
-	//newAndLowerRanks.push_back(u1);
-	
-	
+	int posToInsert = sizeof(userRank) * (rankPos - 1); //la posicio del fitxer on anirà la nova informacio
+		
 	ofstream fsalida(filename, ios::out | ios::binary); //obrim un archiu per escriure en binari ens posem al final per comprovar si hem d'insertar al final
-
+	fsalida.seekp(posToInsert); //ens movem a on volem insertar per no haver de reescriure tot el fitxer sencer cada cop, nomes a partir de la posicio que volem insertar
+	cout << "On insertar : " << fsalida.tellp() << endl;
 	if (fsalida.is_open())
 	{
 		for (int i = 0; i < highScorers.size();i++) {
@@ -61,11 +58,9 @@ vector<userRank> IOManager::ReadBin(const string &filename) {
 	{
 		
 		vector<userRank>bestPlayers;
-		
-		for (int i = 0; fentrada.good(); i++) {
-			userRank tempUser;
-			fentrada.read(reinterpret_cast<char*>(&tempUser), sizeof(tempUser));
-			cout << fentrada.tellg() << endl;
+
+		userRank tempUser;
+		for (int i = 0; fentrada.read(reinterpret_cast<char*>(&tempUser), sizeof(tempUser)); i++) {			
 			bestPlayers.push_back(tempUser);
 						
 		}
