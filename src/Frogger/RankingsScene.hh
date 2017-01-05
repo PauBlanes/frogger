@@ -1,6 +1,9 @@
 #pragma once
 #include "Scene.hh"
 #include "GameScene.hh"
+#include "GUI.hh"
+#include "System.hh"
+#include <vector>
 
 
 struct userRank
@@ -22,5 +25,7 @@ private:
 	userRank user2;
 	userRank user3;
 
+	char getUserName[5];
+	std::vector <userRank> scoresToSend;
 	std::vector <userRank> highScores;
 };

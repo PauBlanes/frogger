@@ -20,6 +20,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+
 #include <XML/rapidxml.hpp>
 using namespace rapidxml;
 using namespace std;
@@ -30,7 +31,7 @@ namespace IOManager {
 	//Llegir un fitxer xml
 	vector<string> ReadXML(string &&, string );
 	//Escriure a un fitxer binari
-	void WriteBin(const string &, userRank);
+	void WriteBin(const string &, vector<userRank>, int);
 	//Llegir d'un fitxer binari
 	vector <userRank> ReadBin(const string &);
 	

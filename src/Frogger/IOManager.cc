@@ -31,21 +31,28 @@ vector<string> IOManager::ReadXML(string &&filename, string difficulty) {
 	return info;
 }
 
-void IOManager::WriteBin(const string &filename, userRank u1) {
+void IOManager::WriteBin(const string &filename, vector<userRank> highScorers, int rank) {
 
-	ofstream fsalida(filename, ios::out | ios::binary | ios::app); //obrim un archiu per escriure en binari i de tipo append per poder escriure al final i no xafar-ho tot cada cop
+	//int userInfoSize = sizeof(userRank);
+	//int posToInsert = userInfoSize * (rank - 1); //la posicio del fitxer on anirà la nova informacio
+	//vector<userRank> newAndLowerRanks; //no utilitzem una cua perquè encara que ara l'anirem omplint per el final més endavant l'haurem de recórrer tot per tornar a escriure.
+	//newAndLowerRanks.push_back(u1);
 	
+	
+	ofstream fsalida(filename, ios::out | ios::binary); //obrim un archiu per escriure en binari ens posem al final per comprovar si hem d'insertar al final
+
 	if (fsalida.is_open())
 	{
+		for (int i = 0; i < highScorers.size();i++) {
+			fsalida.write(reinterpret_cast<char*>(&highScorers[i]), sizeof(highScorers[i]));
 		
-		fsalida.write(reinterpret_cast<char*>(&u1), sizeof(u1));				
-		fsalida.close();	
-	
-	}
-	else cout << "Unable to open file for writing\n";
-
+		}
+		
+		fsalida.close();	  
+		
+	}else cout << "Unable to open file for writing\n";
 }
-
+	
 vector<userRank> IOManager::ReadBin(const string &filename) {
 	
 	ifstream fentrada(filename, ios::in | ios::binary); 
@@ -55,15 +62,13 @@ vector<userRank> IOManager::ReadBin(const string &filename) {
 		
 		vector<userRank>bestPlayers;
 		
-			
-		userRank tempUser;
-
-		fentrada.read(reinterpret_cast<char*>(&tempUser), sizeof(tempUser));
-		cout << tempUser.userName << ": " << tempUser.score << endl;
-		fentrada.read(reinterpret_cast<char*>(&tempUser), sizeof(tempUser));
-		cout << tempUser.userName << ": " << tempUser.score << endl;
-		fentrada.close();
-		//bestPlayers.push_back(tempUser);		
+		for (int i = 0; fentrada.good(); i++) {
+			userRank tempUser;
+			fentrada.read(reinterpret_cast<char*>(&tempUser), sizeof(tempUser));
+			cout << fentrada.tellg() << endl;
+			bestPlayers.push_back(tempUser);
+						
+		}
 		
 		fentrada.close();
 		
