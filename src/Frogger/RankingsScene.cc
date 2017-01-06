@@ -24,7 +24,7 @@ void RankingsScene::Update(void) {
 	if (sP == askingUsername) {
 		
 		if (IM.IsKeyDown<SDLK_RETURN>()) {
-			//SDL_StopTextInput();
+			SDL_StopTextInput();
 			sP = updatingScore;
 		}
 
@@ -57,7 +57,13 @@ void RankingsScene::Draw(void) {
 		{ 0, 0, 0 }); 
 	}	
 	else if (sP == justDrawing) { //Pintem les puntuacions
-		for (int i = 0; i < 10;i++) {
+		
+		GUI::DrawTextBlended<FontID::ARIAL>("TOP 10 PLAYERS (EASY)",
+		{ WIDTH / 2, HEIGHT / 2 - 300, 1, 1 },
+		{ 0, 0, 0 });
+		
+		for (int i = 0; i < userNameLength;i++) {
+			
 			GUI::DrawTextBlended<FontID::ARIAL>(std::to_string(i + 1) + ". " + highScores[i].userName + ":" + std::to_string(highScores[i].score),
 			{ WIDTH / 2, HEIGHT / 2 - 200 + 60 * i, 1, 1 },
 			{ 0, 0, 0 }); 
@@ -99,7 +105,12 @@ void RankingsScene::UpdateRanking(void) {
 		else
 			position++;
 	}
-	
-	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin");
+	for (auto& i : highScores) {
+		cout << i.userName << endl;
+	}
+	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin"); //actualitzem per pintar la ultima puntuacio que hem afegit
+	for (auto& i : highScores) {
+		cout << i.userName << endl;
+	}
 	
 }
