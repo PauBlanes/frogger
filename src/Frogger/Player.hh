@@ -14,7 +14,7 @@ public:
 	void Move();
 	void Draw(void);
 	void Die();
-	void DetectCollision(Vehiculo);
+	void DetectVehicle(Vehiculo);
 	bool DetectTronc(Tronc);
 	void DetectRiu(Sprite);
 	bool DetectInsecte(Insecto);

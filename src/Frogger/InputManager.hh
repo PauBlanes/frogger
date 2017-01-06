@@ -10,6 +10,7 @@
 #include <SDL/SDL.h>
 #include <unordered_map>
 
+
 //! Defines a shortcut to the InputManager Singleton instance.
 #define IM InputManager::Instance()
 
@@ -20,6 +21,7 @@ struct MouseCoords {
 	MouseCoords(Sint32 x_, Sint32 y_) : x(x_), y(y_) {};
 	friend MouseCoords operator-(const MouseCoords &lhs, const MouseCoords &rhs) { return std::move(MouseCoords(lhs.x - rhs.x, lhs.y - rhs.y)); };
 	friend std::ostream &operator<<(std::ostream &os, const MouseCoords &rhs) { return os << '(' << rhs.x << ", " << rhs.y << ')'; };
+	
 };
 
 //! Identifies each button pressed with the mouse (left | middle | right).
@@ -49,6 +51,7 @@ enum KeyButton : int {
 
 //! Controls all input info and stores it to be used in other pats of the code as a Singleton.
 class InputManager {
+	friend class RankingsScene;
 public:
 	/**
 	 * Creates a Singleton instance of the InputManager class.
@@ -64,6 +67,7 @@ public:
 	void Update(void) {
 		ProcessStates(); // Controls the state of each event stored in the dictionary
 		SDL_Event evnt; // Stores the different types of input events [https://wiki.libsdl.org/SDL_Event]
+		
 		while (SDL_PollEvent(&evnt)) { // While input events exist, unpack them and store them in the SDL_Event variable one by one
 			switch (evnt.type) { // Check the event type (keyboard, mouse, window, joystick, ...)
 				case SDL_QUIT:				m_exit = true; break; // The cross button of the window has been pressed
@@ -71,10 +75,14 @@ public:
 				case SDL_MOUSEWHEEL:		m_mouseWheel = evnt.wheel.y; // Store the movement direction of the wheel when it is used
 				case SDL_MOUSEBUTTONDOWN:	m_inputValues.push(&(m_inputMap[evnt.button.button] = InputValue::DOWN)); break; // Push the event mouse down to the queue of processes
 				case SDL_MOUSEBUTTONUP:		m_inputValues.push(&(m_inputMap[evnt.button.button] = InputValue::UP)); break; // Push the event mouse up to the queue of processes
-				case SDL_KEYDOWN:			m_inputValues.push(&(m_inputMap[evnt.key.keysym.sym] = (evnt.key.repeat) ? InputValue::HOLD : InputValue::DOWN)); break; // Push the event key down to the queue of processes
+				case SDL_KEYDOWN:			m_inputValues.push(&(m_inputMap[evnt.key.keysym.sym] = (evnt.key.repeat) ? InputValue::HOLD : InputValue::DOWN)); // Push the event key down to the queue of processes
+					if (inputText.size() > 0 && evnt.key.keysym.sym == SDLK_BACKSPACE) inputText = inputText.substr(0, inputText.size() - 1); //Mirem si hem de borrar el nostre text que estem escribint
+											break;
 				case SDL_KEYUP:				m_inputValues.push(&(m_inputMap[evnt.key.keysym.sym] = InputValue::UP)); break; // Push the event key up to the queue of processes
+				case SDL_TEXTINPUT: 		inputText += evnt.text.text; break;//Si no hem de borrar escribim, 10 es al tamany màxim del usuari perque no puguis escriure infinitament, (no hi ha hagut manera de passar aquest numero des de RankingsScene).
 			}
 		}
+		
 	}
 	/**
 	 * Checks if the cross button of the window has been pressed.
@@ -82,6 +90,9 @@ public:
 	 */
 	inline bool HasQuit(void) const { 
 		return m_exit; 
+	};
+	inline std::string GetInputText() const {
+		return inputText;
 	};
 	/**
 	 * Get the mouse coordinates.
@@ -198,4 +209,6 @@ private:
 	MouseCoords m_mouseCoords;								//!< Mouse coordinates main instance where mouse input info is stored.
 	Sint32 m_mouseWheel{ 0 };								//!< Mouse wheel info which is stored for vertical movement.
 	bool m_exit = false;									//!< Trigger condition that sets to true when the user clicks the cross window button.
+	
+	std::string inputText = "";
 };

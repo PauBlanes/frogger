@@ -1,5 +1,3 @@
-#pragma once
-
 #include "System.hh"
 #include "Button.hh"
 #include <iostream>

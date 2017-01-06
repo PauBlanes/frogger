@@ -9,37 +9,70 @@ RankingsScene::~RankingsScene(void) {
 }
 
 void RankingsScene::OnEntry(void) {
-			
-	UpdateRanking();
+	
+	SDL_StartTextInput();
+	sP = askingUsername;
+	
 }
 
 void RankingsScene::OnExit(void) {
+	
 }
 
 void RankingsScene::Update(void) {
 	
+	if (sP == askingUsername) {
+		
+		if (IM.IsKeyDown<SDLK_RETURN>()) {
+			//SDL_StopTextInput();
+			sP = updatingScore;
+		}
+
+		userInput = IM.GetInputText();
+				
+		if (userInput.size() >= userNameLength) { //Si ens passem del tamany de nom d'usuari permès no deixem escriure més.
+			if (SDL_TEXTINPUT)
+				SDL_StopTextInput();
+
+		}
+		if (IM.IsKeyDown<SDLK_BACKSPACE>()) { //Si hem apagat el text input però borrem i tornem a estar dins del tamany permès de nom d'usuari hem de tornar a activar el text input.
+			SDL_StartTextInput();
+		}
+		
+	}
+	else if (sP == updatingScore) {
+		UpdateRanking();
+		sP = justDrawing;
+	}
+		
+		
+	
 }
 
 void RankingsScene::Draw(void) {
-	GUI::DrawTextBlended<FontID::ARIAL>("Write your username : ",
-	{ WIDTH/2, HEIGHT/2-400, 1, 1 },
-	{ 255, 0, 0 }); // Render score that will be different when updated
 	
-	for (int i = 0; i < 10;i++) {
-		
-		GUI::DrawTextBlended<FontID::ARIAL>(std::to_string(i+1) + ". " + highScores[i].userName + ":" + std::to_string(highScores[i].score),
-		{ WIDTH / 2, HEIGHT / 2 - 200 +60*i, 1, 1 },
-		{ 255, 0, 0 }); // Render score that will be different when updated
+	if (sP == askingUsername) { //Pintem el text inicial i el nom que estas escribint
+		GUI::DrawTextBlended<FontID::ARIAL>("USERNAME : " + userInput,
+		{ WIDTH / 2, HEIGHT / 2 - 200, 1, 1 },
+		{ 0, 0, 0 }); 
+	}	
+	else if (sP == justDrawing) { //Pintem les puntuacions
+		for (int i = 0; i < 10;i++) {
+			GUI::DrawTextBlended<FontID::ARIAL>(std::to_string(i + 1) + ". " + highScores[i].userName + ":" + std::to_string(highScores[i].score),
+			{ WIDTH / 2, HEIGHT / 2 - 200 + 60 * i, 1, 1 },
+			{ 0, 0, 0 }); 
+		}
 	}
 	
 }
 
 void RankingsScene::UpdateRanking(void) {
 	
-	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin"); //hem de llegir perquè quan tornem a executar el vector estarà buit.
+	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin"); //hem de llegir perquè quan tornem a executar el vector estarà buit.	
 	
-	newUser = { "Juan", GameScene::score };
-
+	strcpy(newUser.userName, userInput.c_str());
+	newUser.score = GameScene::score;
+		
 	//si esta buit omplim amb jugadors model
 	if (highScores.empty()) { 
 		cout << "buit" << endl;
@@ -66,8 +99,7 @@ void RankingsScene::UpdateRanking(void) {
 		else
 			position++;
 	}
-	for (auto&i : highScores) {
-		cout << i.userName << " : " << i.score << endl;
-	}
+	
+	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin");
 	
 }

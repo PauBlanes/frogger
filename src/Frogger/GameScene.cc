@@ -71,7 +71,7 @@ GameScene::~GameScene(void){
 }
 
 void GameScene::OnEntry(void) {
-	
+	SDL_StopTextInput();
 	//Llegim les dades al xml
 	vector <string> infoXML = IOManager::ReadXML("../../res/cfg/LvLSettings.xml", difficulty);
 	initMultiplierSpeed = atoi(infoXML[0].c_str());
@@ -114,7 +114,7 @@ void GameScene::Update(void) {
 	//Moure vehivles i detectar colisions
 	for (int i = 0;i < vehicleArray.size();i++) {
 		vehicleArray[i].Move();
-		pj.DetectCollision(vehicleArray[i]);
+		pj.DetectVehicle(vehicleArray[i]);
 	}
 	aCapTronc = true;
 	for (int i = 0;i < troncArray.size();i++) {
