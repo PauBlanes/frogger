@@ -56,7 +56,7 @@ private:
 	std::vector<Granota> GranotaArray;
 	std::vector<std::pair<int, int>> limitRana; //aquest array conte les minX i maxX dels forats.
 	int RanaNum; //amb aquest numero sabrem si has salvat totes les granotes	
-	int arrayPos; //utilitzarem aquest int per borrar en un index del vector les coordenades del forat en el que hem entrat.
+	
 	bool casellaFinalBona; 
 
 	bool aCapTronc; //aquest bool nomes es false si no estàs tocant cap tronc de la escena. Si és false comprovarem si estàs tocant el riu.

@@ -18,8 +18,7 @@ enum class ObjectID : const int {
 	CAMI, TERRA,AIGUA,
 	PJBASIC,
 	FONDO, FONDOMENU,
-	PLAYBUTTON, EXITBUTTON
-
+	PLAYBUTTON, EXITBUTTON, TOP10BUTTON, TOMENUBUTTON,
 };
 inline std::ostream &operator<<(std::ostream &os, const ObjectID &id) { return os << int(id); };
 inline std::istream &operator>>(std::istream &is, ObjectID &id) { return is >> reinterpret_cast<int&>(id); };

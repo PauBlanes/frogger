@@ -21,7 +21,7 @@ Vehiculo::Vehiculo(int x, int y, int w, int h, ObjectID mySprite, type tipo, int
 		break;	
 	}
 	direction = dir;
-	
+	speed *= GameScene::initMultiplierSpeed;
 }
 
 void Vehiculo::Draw() {
@@ -32,7 +32,7 @@ void Vehiculo::Move() {
 	
 	speed += GameScene::score/1000;  //incrementem velocitat en funcio de la score
 	
-	vehicleX -= speed * TM.GetDeltaTime() * direction * GameScene::initMultiplierSpeed;
+	vehicleX -= speed * TM.GetDeltaTime() * direction;
 	vSprite.transform.x = (int)vehicleX;
 	if (vSprite.transform.x < 0 && direction == 1) {
 		vSprite.transform.x = WIDTH - vSprite.transform.w;

@@ -1,8 +1,12 @@
 #include "RankingsScene.hh"
 #include "IOManager.hh"
 
+
+scenePhase RankingsScene::sP;
+
 RankingsScene::RankingsScene(void) {
-	
+	sP = askingUsername; //ho posem aqui perque aixi si hem de canviar-ho des d'una altra escena per no ahver d'escriure el username no tindrem problemes.
+	toMenu.SetCoords(20, 20,100, 100, ObjectID::TOMENUBUTTON);
 }
 
 RankingsScene::~RankingsScene(void) {
@@ -10,8 +14,8 @@ RankingsScene::~RankingsScene(void) {
 
 void RankingsScene::OnEntry(void) {
 	
+	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin"); //hem de llegir perquè quan tornem a executar el vector estarà buit.
 	SDL_StartTextInput();
-	sP = askingUsername;
 	
 }
 
@@ -44,8 +48,11 @@ void RankingsScene::Update(void) {
 		UpdateRanking();
 		sP = justDrawing;
 	}
-		
-		
+
+	//Si clickem el botó de retorn al menu
+	if (IM.IsMouseUp<MOUSE_BUTTON_LEFT>()) 
+		if (toMenu.ICliked())
+			SM.SetCurScene<StartScene>();	
 	
 }
 
@@ -69,12 +76,11 @@ void RankingsScene::Draw(void) {
 			{ 0, 0, 0 }); 
 		}
 	}
-	
+
+	toMenu.Draw();	
 }
 
-void RankingsScene::UpdateRanking(void) {
-	
-	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin"); //hem de llegir perquè quan tornem a executar el vector estarà buit.	
+void RankingsScene::UpdateRanking(void) {		
 	
 	strcpy(newUser.userName, userInput.c_str());
 	newUser.score = GameScene::score;
@@ -105,12 +111,8 @@ void RankingsScene::UpdateRanking(void) {
 		else
 			position++;
 	}
-	for (auto& i : highScores) {
-		cout << i.userName << endl;
-	}
+	
 	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin"); //actualitzem per pintar la ultima puntuacio que hem afegit
-	for (auto& i : highScores) {
-		cout << i.userName << endl;
-	}
+	
 	
 }

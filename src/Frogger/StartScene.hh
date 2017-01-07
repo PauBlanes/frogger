@@ -2,6 +2,12 @@
 #include "Scene.hh"
 #include "Sprite.hh"
 #include "Button.hh"
+#include "DifficultyScene.hh"
+#include "SceneManager.hh"
+#include "RankingsScene.hh"
+#include "GUI.hh"
+#include "System.hh"
+#include "Logger.hh"
 
 class StartScene : public Scene {
 public:
@@ -16,5 +22,5 @@ private:
 	Sprite Titol;
 	Button playButton;
 	Button exitButton;
-
+	Button top10Button;
 };

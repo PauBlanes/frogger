@@ -25,13 +25,17 @@ namespace GameEngine {
 		
 		//Buttons
 		R.LoadTexture<ObjectID::PLAYBUTTON>("gfx/playButton.png");
-		R.LoadTexture<ObjectID::EXITBUTTON>("gfx/exitButton.png");
-		//StartScene
-		R.LoadTexture<ObjectID::TITOL>("gfx/TITOL.png");
-		R.LoadTexture<ObjectID::FONDOMENU>("gfx/fondoMenu.png");
+		R.LoadTexture<ObjectID::EXITBUTTON>("gfx/exitButton.png");		
 		R.LoadTexture<ObjectID::OP1>("gfx/FACIL.png");
 		R.LoadTexture<ObjectID::OP2>("gfx/NORMAL.png");
 		R.LoadTexture<ObjectID::OP3>("gfx/DIFICIL.png");
+		R.LoadTexture<ObjectID::TOP10BUTTON>("gfx/top10Icon.png");
+		R.LoadTexture<ObjectID::TOMENUBUTTON>("gfx/backToMenu.jpg");
+
+		//StartScene
+		R.LoadTexture<ObjectID::TITOL>("gfx/TITOL.png");
+		R.LoadTexture<ObjectID::FONDOMENU>("gfx/fondoMenu.png");
+		
 		//GameScene
 		R.LoadTexture<ObjectID::FONDO>("gfx/fondo.png");
 		R.LoadTexture<ObjectID::RALLY_ROJO>("gfx/COTXE_ROJO.png");
@@ -57,8 +61,7 @@ namespace GameEngine {
 		SM.AddScene<StartScene>();
 		SM.AddScene<DifficultyScene>();
 		SM.AddScene<RankingsScene>();
-		SM.SetCurScene<StartScene>();
-		
+		SM.SetCurScene<StartScene>();		
 //		
 	}
 	/** 

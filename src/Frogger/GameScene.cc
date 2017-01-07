@@ -12,6 +12,7 @@
 #include "IOManager.hh"
 #include <stdlib.h>    
 #include <time.h> 
+
 using namespace std;
 using namespace Logger;
 
@@ -36,19 +37,7 @@ GameScene::GameScene() {
 	counterLinia4 = 0.5 + rand() % 1;
 	counterLinia5 = 0.2 + rand()%1;
 
-	srand(time(NULL));
-	//GameObjects inicials
-	//linia 1: rallys TARONGES
-	InsertVehicle(WIDTH - 100, HEIGHT - (HEIGHT / 16) - 120, WIDTH / 15, 30, ObjectID::RALLY_NARANJA, rally,1); // 120 es el marge que deixcem a baix per el contador de temps
-	//linia2: cotxes BLANCS	
-	InsertVehicle(WIDTH/2, HEIGHT - (HEIGHT / 16)*2 - 120, WIDTH / 15, 30, ObjectID::COTXE_BLANCO, coche,-1);	
-	//linia3 : cotxes ROSES
-	InsertVehicle(WIDTH - 100, HEIGHT - (HEIGHT / 16)*3 - 120, WIDTH / 15, 30, ObjectID::COTXE_ROSA, coche,1); 
-	InsertVehicle(WIDTH - 300, HEIGHT - (HEIGHT / 16)*3 - 120, WIDTH / 15, 30, ObjectID::COTXE_ROSA, coche,1);
-	//linia4: rallys VERMELL
-	InsertVehicle(500, HEIGHT - (HEIGHT / 16)*4 - 120, WIDTH / 15, 30, ObjectID::RALLY_ROJO, rally,-1);
-	//linia5: camiones
-	InsertVehicle(WIDTH / 2, HEIGHT - (HEIGHT / 16) * 5 - 120, WIDTH / 15, 30, ObjectID::CAMIO, camion, 1);
+	srand(time(NULL));	
 
 	//TRONCS
 	//linia 1
@@ -71,7 +60,7 @@ GameScene::~GameScene(void){
 }
 
 void GameScene::OnEntry(void) {
-	SDL_StopTextInput();
+	
 	//Llegim les dades al xml
 	vector <string> infoXML = IOManager::ReadXML("../../res/cfg/LvLSettings.xml", difficulty);
 	initMultiplierSpeed = atoi(infoXML[0].c_str());
@@ -84,11 +73,24 @@ void GameScene::OnEntry(void) {
 
 	score = 0;
 	
+	//GameObjects inicials. Els vehicles els posem aqui pq sino aquestst que son els incials no tenen el multiplicador de velocitat del xml pq al constructor encara no l'hem llegit.
+	//linia 1: rallys TARONGES
+	InsertVehicle(WIDTH - 100, HEIGHT - (HEIGHT / 16) - 120, WIDTH / 15, 30, ObjectID::RALLY_NARANJA, rally, 1); // 120 es el marge que deixcem a baix per el contador de temps
+																												 //linia2: cotxes BLANCS	
+	InsertVehicle(WIDTH / 2, HEIGHT - (HEIGHT / 16) * 2 - 120, WIDTH / 15, 30, ObjectID::COTXE_BLANCO, coche, -1);
+	//linia3 : cotxes ROSES
+	InsertVehicle(WIDTH - 100, HEIGHT - (HEIGHT / 16) * 3 - 120, WIDTH / 15, 30, ObjectID::COTXE_ROSA, coche, 1);
+	InsertVehicle(WIDTH - 300, HEIGHT - (HEIGHT / 16) * 3 - 120, WIDTH / 15, 30, ObjectID::COTXE_ROSA, coche, 1);
+	//linia4: rallys VERMELL
+	InsertVehicle(500, HEIGHT - (HEIGHT / 16) * 4 - 120, WIDTH / 15, 30, ObjectID::RALLY_ROJO, rally, -1);
+	//linia5: camiones
+	InsertVehicle(WIDTH / 2, HEIGHT - (HEIGHT / 16) * 5 - 120, WIDTH / 15, 30, ObjectID::CAMIO, camion, 1);
+
 	//Aquests son les xs dels forats del final
 	limitRana = { { 20,85 },{ 185,250 },{ 345,410 },{ 505,575 },{ 670,735 } };
 	//RanaNum = 0;
 	casellaFinalBona = false;//aixo ens servira per saber si estema  uan casella final nova o no
-	arrayPos = 0;
+	
 
 	//Calculem quants vehicles de cada tipus hi haurà (nosaltres ho fem per linia, és a dir el doble en el cas dels cotxes i rallys.)
 	numCotxes = 3 + nivel % 3;
@@ -135,27 +137,27 @@ void GameScene::Update(void) {
 	}
 
 	
-	
+	//cout << insect.insectPositions.size() << endl;
 	//aqui comprovem si esta en una casella que no pertany a larray.
 	if (pj.playerSprite.transform.y < 188) { //si esta a la alçada de la pantalla que toca
-		//std::cout << casellaFinalBona << std::endl;
-		for (auto i : limitRana) { 
-			arrayPos = (arrayPos +1)%5; //utilitzarem aquest numero per borrar les coordenades del forat en que has entrat, així si entres en un forat que ja has entrat moriras.
-			
-			std::cout << i.first << "," << i.second << std::endl;
-			std::cout << pj.playerSprite.transform.x << std::endl;
-			if (pj.playerSprite.transform.x >= i.first && pj.playerSprite.transform.x + pj.playerSprite.transform.w <= i.second) { //comprovem per a cada un dels forats buits				
+		pj.movimentSegur = false; //no volem que també tinguis els 10 punts per aquest moviment perque ja estàs aconseguint els 50 per arrivar al final
+		for (int i = 0; i < limitRana.size();i++) { //no podem fer el auto& it pq volem borrar coses
 				
-				InsertGranota(i.first, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
+			std::cout << limitRana[i].first << "," << limitRana[i].second << std::endl;
+			std::cout << pj.playerSprite.transform.x << std::endl;
+			if (pj.playerSprite.transform.x >= limitRana[i].first && pj.playerSprite.transform.x + pj.playerSprite.transform.w <= limitRana[i].second) { //comprovem per a cada un dels forats buits				
+				
+				InsertGranota(limitRana[i].first, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
 				pj.playerSprite.transform.x = (WIDTH >> 1);
 				pj.playerSprite.transform.y = HEIGHT - 120;
-				pj.movimentSegur = false; //no volem que també tinguis els 10 punts per aquest moviment perque ja estàs aconseguint els 50 per arrivar al final
+				
 				RanaNum++;
 				casellaFinalBona = true;
-				limitRana.erase(limitRana.begin() + arrayPos); //borrem les Xs d'aquest forat perquè ja no sigui segur.
+				limitRana.erase(limitRana.begin() + i); //borrem les Xs d'aquest forat perquè ja no sigui segur i moris si hi tornes a entrar
 				if (pj.DetectInsecte(insect)) {
+					cout << "Hola" << endl;
 					insect.waitTime = 0; //el fem saltar a una altra posicio inmediatament
-					insect.insectPositions.erase(insect.insectPositions.begin() + arrayPos);//com que aquest array està ordenat igual que el de minX i maxX dels forats podem borrar el mateix index pq l'insecte noe s pinti a caselles on ja hi ha granota.
+					insect.insectPositions.erase(insect.insectPositions.begin() + i);//com que aquest array està ordenat igual que el de minX i maxX dels forats podem borrar el mateix index pq l'insecte noe s pinti a caselles on ja hi ha granota.
 					score += 200;
 				}					
 				else
@@ -183,7 +185,6 @@ void GameScene::Update(void) {
 	}
 	
 	
-
 }
 
 void GameScene::Draw(void) {
