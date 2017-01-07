@@ -17,7 +17,7 @@ Vehiculo::Vehiculo(int x, int y, int w, int h, ObjectID mySprite, type tipo, int
 		speed = 0.05;
 		break;
 	case rally:
-		speed = 0.4;
+		speed = 0.3;
 		break;	
 	}
 	direction = dir;
