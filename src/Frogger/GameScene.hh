@@ -14,6 +14,7 @@
 #include <vector>
 #include "Insecto.hh"
 #include "Granota.hh"
+#include "Button.hh"
 
 // GameScene class with the main gameplay mode
 class GameScene : public Scene {
@@ -49,6 +50,10 @@ private:
 	float counterLinia3;
 	float counterLinia4;
 	float counterLinia5;
+
+	int numCotxes;
+	int numRallys;
+	int numCamions;
 	
 	std::vector<Vehiculo> vehicleArray;
 	std::vector<Tronc> troncArray;
@@ -59,18 +64,16 @@ private:
 	
 	bool casellaFinalBona; 
 
-	bool aCapTronc; //aquest bool nomes es false si no estàs tocant cap tronc de la escena. Si és false comprovarem si estàs tocant el riu.
-	
+	bool aCapTronc; //aquest bool nomes es false si no estàs tocant cap tronc de la escena. Si és false comprovarem si estàs tocant el riu.	
 
 	Player pj;
 
-	int nivel;
+	int nivel;	
 
-	int numCotxes;
-	int numRallys;
-	int numCamions;
-
-
-
+	//Menu de Pausa
+	bool isPaused;//utilitzarem això per pausar el joc
+	Button PMResume;
+	Button PMRestart;
+	Button PMToMenu;
 	
 };

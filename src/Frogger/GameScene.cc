@@ -39,21 +39,10 @@ GameScene::GameScene() {
 
 	srand(time(NULL));	
 
-	//TRONCS
-	//linia 1
-	InsertTronc(WIDTH - 200, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16), 100, 40,large, 1);
-	InsertTronc(0, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16), 100, 40, large, 1);
-	//linia2
-	InsertTronc(0, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16)*2, 150, 40, small, -1);
-	InsertTronc (300, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 2, 150, 40, small, -1);
-	InsertTronc(600, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 2, 150, 40, small, -1);
-	//linia3
-	InsertTronc(150, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16)*3, 100, 40, (TroncType)(rand() % 3), 1);
-	//linia4
-	InsertTronc(300, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16)*4, 100, 40, (TroncType)(rand() % 3), -1);
-	//linia5
-	InsertTronc(WIDTH - 200, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16)*5, 100, 40, (TroncType)(rand() % 3), 1);
-
+	//Botons del Menu de Pausa
+	PMResume.SetCoords(WIDTH / 2 - 175, HEIGHT/2-150, 350, 100, ObjectID::PMRESUME);
+	PMRestart.SetCoords(WIDTH / 2 - 175, HEIGHT / 2, 350, 100, ObjectID::PMRESTART);
+	PMToMenu.SetCoords(WIDTH / 2 - 175, HEIGHT / 2 +150, 350, 100, ObjectID::PMTOMENU);
 }
 
 GameScene::~GameScene(void){
@@ -72,7 +61,13 @@ void GameScene::OnEntry(void) {
 	cout << "Time divider: " <<timeDivider << endl;	
 
 	score = 0;
-	
+
+	//Resetegem el jugador
+	pj.playerSprite.transform.x = WIDTH / 2;
+	pj.playerSprite.transform.y = HEIGHT - 120;
+	pj.playerX = (float)(WIDTH >> 1);
+
+	vehicleArray.clear();//aixo ho fem pq sino al tornar a entrar des d'una altra escena teniem el doble de cotxes perque es tornen a instanciar aquests.
 	//GameObjects inicials. Els vehicles els posem aqui pq sino aquestst que son els incials no tenen el multiplicador de velocitat del xml pq al constructor encara no l'hem llegit.
 	//linia 1: rallys TARONGES
 	InsertVehicle(WIDTH - 100, HEIGHT - (HEIGHT / 16) - 120, WIDTH / 15, 30, ObjectID::RALLY_NARANJA, rally, 1); // 120 es el marge que deixcem a baix per el contador de temps
@@ -85,9 +80,30 @@ void GameScene::OnEntry(void) {
 	InsertVehicle(500, HEIGHT - (HEIGHT / 16) * 4 - 120, WIDTH / 15, 30, ObjectID::RALLY_ROJO, rally, -1);
 	//linia5: camiones
 	InsertVehicle(WIDTH / 2, HEIGHT - (HEIGHT / 16) * 5 - 120, WIDTH / 15, 30, ObjectID::CAMIO, camion, 1);
+	
+	troncArray.clear();
+	//TRONCS
+	//linia 1
+	InsertTronc(WIDTH - 200, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16), 100, 40, large, 1);
+	InsertTronc(0, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16), 100, 40, large, 1);
+	//linia2
+	InsertTronc(0, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 2, 150, 40, small, -1);
+	InsertTronc(300, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 2, 150, 40, small, -1);
+	InsertTronc(600, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 2, 150, 40, small, -1);
+	//linia3
+	InsertTronc(150, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 3, 100, 40, (TroncType)(rand() % 3), 1);
+	//linia4
+	InsertTronc(300, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 4, 100, 40, (TroncType)(rand() % 3), -1);
+	//linia5
+	InsertTronc(WIDTH - 200, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 5, 100, 40, (TroncType)(rand() % 3), 1);
+
 
 	//Aquests son les xs dels forats del final
-	limitRana = { { 20,85 },{ 185,250 },{ 345,410 },{ 505,575 },{ 670,735 } };
+	limitRana = { { 20,85 },{ 180,255 },{ 340,415 },{ 500,580 },{ 665,740 } };
+	GranotaArray.clear();//per si sortim de la escena i tornem a entrar des d'una altra
+
+	//Insecte
+	insect.insectPositions = { 25,190,355,520,680 };
 	//RanaNum = 0;
 	casellaFinalBona = false;//aixo ens servira per saber si estema  uan casella final nova o no
 	
@@ -99,91 +115,108 @@ void GameScene::OnEntry(void) {
 }
 
 void GameScene::OnExit(void) {
+	if (isPaused)
+		isPaused = !isPaused;
 }
 
 void GameScene::Update(void) {
 	
-	pj.Move();
+	if (!isPaused) { //aixo ho posem aqui perque volem que nomes funcioni en aquesta escena i sino al apretar esc no podriem clickar botons en altres escenes. També el problema seria que heuriem de tenir la comprovacio del input del esc per pausar aqui i la de despausar en el GameEngine, i ens sembla millor fer-ho tot aqui ja que només ha de funcionar per aquesta escena.
 
-	//insertem vehicles fins que hi ha els que toca
-	WaitAndInsert();
-
-	//movem el insect cada 5 segons
-	insect.Move();
-	//comprovar si el pj ha agafat el insecte
-	pj.DetectInsecte(insect);
-
-	//Moure vehivles i detectar colisions
-	for (int i = 0;i < vehicleArray.size();i++) {
-		vehicleArray[i].Move();
-		pj.DetectVehicle(vehicleArray[i]);
-	}
-	aCapTronc = true;
-	for (int i = 0;i < troncArray.size();i++) {
+		pj.Move();
 		
-		troncArray[i].Move();
-		if (pj.DetectTronc(troncArray[i]))
-			aCapTronc = false;
-		
-	}
-	if(aCapTronc && pj.playerSprite.transform.y >= 189 )//si el jugador no està colisionant amb cap tronc llavors mirem si colisiona amb el riu
-		pj.DetectRiu(AIGUA);
-		
-	
-	//Un cop he detectat colisons sabre si me mogut a casella segura o no
-	if (pj.movimentSegur && pj.playerSprite.transform.y > 188) {
-		score += 10;
-		pj.movimentSegur = false;
-	}
+		//insertem vehicles fins que hi ha els que toca
+		WaitAndInsert();
 
-	
-	//cout << insect.insectPositions.size() << endl;
-	//aqui comprovem si esta en una casella que no pertany a larray.
-	if (pj.playerSprite.transform.y < 188) { //si esta a la alçada de la pantalla que toca
-		pj.movimentSegur = false; //no volem que també tinguis els 10 punts per aquest moviment perque ja estàs aconseguint els 50 per arrivar al final
-		for (int i = 0; i < limitRana.size();i++) { //no podem fer el auto& it pq volem borrar coses
-				
-			std::cout << limitRana[i].first << "," << limitRana[i].second << std::endl;
-			std::cout << pj.playerSprite.transform.x << std::endl;
-			if (pj.playerSprite.transform.x >= limitRana[i].first && pj.playerSprite.transform.x + pj.playerSprite.transform.w <= limitRana[i].second) { //comprovem per a cada un dels forats buits				
-				
-				InsertGranota(limitRana[i].first, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
-				pj.playerSprite.transform.x = (WIDTH >> 1);
-				pj.playerSprite.transform.y = HEIGHT - 120;
-				
-				RanaNum++;
-				casellaFinalBona = true;
-				limitRana.erase(limitRana.begin() + i); //borrem les Xs d'aquest forat perquè ja no sigui segur i moris si hi tornes a entrar
-				if (pj.DetectInsecte(insect)) {
-					cout << "Hola" << endl;
-					insect.waitTime = 0; //el fem saltar a una altra posicio inmediatament
+		//movem el insect cada 5 segons
+		insect.Move();
+		
+		//Moure vehivles i detectar colisions
+		for (int i = 0;i < vehicleArray.size();i++) {
+			vehicleArray[i].Move();
+			pj.DetectVehicle(vehicleArray[i]);
+		}
+		aCapTronc = true;
+		for (int i = 0;i < troncArray.size();i++) {
+
+			troncArray[i].Move();
+			if (pj.DetectTronc(troncArray[i]))
+				aCapTronc = false;
+
+		}
+		if (aCapTronc && pj.playerSprite.transform.y >= 189)//si el jugador no està colisionant amb cap tronc llavors mirem si colisiona amb el riu
+			pj.DetectRiu(AIGUA);	
+
+		
+		//aqui comprovem si esta en una casella que no pertany a larray.
+		if (pj.playerSprite.transform.y < 188) { //si esta a la alçada de la pantalla que toca
+			cout << insect.insectSprite.transform.x << " vs Player: " << pj.playerSprite.transform.x << endl;
+			for (int i = 0; i < limitRana.size();i++) { //no podem fer el auto& it pq volem borrar coses
+
+				std::cout << limitRana[i].first << "," << limitRana[i].second << std::endl;
+				std::cout << pj.playerSprite.transform.x <<" i width " << pj.playerSprite.transform.x + pj.playerSprite.transform.w << std::endl;
+				if (pj.playerSprite.transform.x >= limitRana[i].first && pj.playerSprite.transform.x <= limitRana[i].second) { //comprovem per a cada un dels forats buits				
+					
+					if (pj.DetectInsecte(insect)) {
+						insect.waitTime = 0; //el fem saltar a una altra posicio inmediatament
+						cout << "Hihi" << endl;
+						
+					}
+					else
+						score += 50;
+					
+					InsertGranota(limitRana[i].first, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
+					pj.playerSprite.transform.x = (WIDTH >> 1);
+					pj.playerSprite.transform.y = HEIGHT - 120;
+					
+					RanaNum++;
+					casellaFinalBona = true;
+					limitRana.erase(limitRana.begin() + i); //borrem les Xs d'aquest forat perquè ja no sigui segur i moris si hi tornes a entrar
 					insect.insectPositions.erase(insect.insectPositions.begin() + i);//com que aquest array està ordenat igual que el de minX i maxX dels forats podem borrar el mateix index pq l'insecte noe s pinti a caselles on ja hi ha granota.
-					score += 200;
-				}					
-				else
-					score += 50;
-
-				if (RanaNum == 5) {
-					score += 1000;
-					RanaNum = 0;
+					
+					if (RanaNum == 5) {
+						score += 1000;
+						RanaNum = 0;
+						pj.Die();
+					}
+					
 				}
+				pj.movimentSegur = false; //no volem que també tinguis els 10 punts per aquest moviment perque ja estàs aconseguint els 50 per arrivar al final
 			}
-		};
-		
-		if (casellaFinalBona == false) { //hem de posar això fora del for perquè primer comprovi el if amb tots els forats.
-			if (pj.vides > 0) {
-				pj.playerSprite.transform.x = (WIDTH >> 1);
-				pj.playerSprite.transform.y = HEIGHT - 120;
-				pj.vides -= 1;
+
+			if (casellaFinalBona == false) { //hem de posar això fora del for perquè primer comprovi el if amb tots els forats.
+				if (pj.vides > 0) {
+					pj.playerSprite.transform.x = (WIDTH >> 1);
+					pj.playerSprite.transform.y = HEIGHT - 120;
+					pj.vides -= 1;
+				}
+				else
+					pj.Die();
+
 			}
 			else
-				pj.Die();
-			
+				casellaFinalBona = false;
 		}
-		else
-			casellaFinalBona = false;
+
+		//Un cop he detectat colisons sabre si me mogut a casella segura o no
+		if (pj.movimentSegur && pj.playerSprite.transform.y > 188) {
+			score += 10;
+			pj.movimentSegur = false;
+		}
+	}
+	else {
+		if (IM.IsMouseUp<MOUSE_BUTTON_LEFT>()) {
+			if (PMRestart.ICliked()) 
+				SM.SetCurScene<DifficultyScene>();							
+			if (PMResume.ICliked())
+				isPaused = false;
+			if (PMToMenu.ICliked())
+				SM.SetCurScene<StartScene>();
+		}
 	}
 	
+	if (IM.IsKeyDown<SDLK_ESCAPE>())
+		isPaused = !isPaused;
 	
 }
 
@@ -225,6 +258,11 @@ void GameScene::Draw(void) {
 	 { 100, int(HEIGHT-45), 1, 1 },
 	 { 255, 0, 0 }); // Render score that will be different when updated
 	
+	 if (isPaused) {
+		 PMResume.Draw();
+		 PMRestart.Draw();
+		 PMToMenu.Draw();
+	 }
 }
 
 void GameScene::InsertVehicle(int x, int y, int w, int h, ObjectID mySprite, type tipo, int dir) {

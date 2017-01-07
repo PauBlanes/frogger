@@ -31,6 +31,9 @@ namespace GameEngine {
 		R.LoadTexture<ObjectID::OP3>("gfx/DIFICIL.png");
 		R.LoadTexture<ObjectID::TOP10BUTTON>("gfx/top10Icon.png");
 		R.LoadTexture<ObjectID::TOMENUBUTTON>("gfx/backToMenu.jpg");
+		R.LoadTexture<ObjectID::PMRESTART>("gfx/RestartButton.png");
+		R.LoadTexture<ObjectID::PMRESUME>("gfx/ResumeButton.png");
+		R.LoadTexture<ObjectID::PMTOMENU>("gfx/PMToMenuButton.png");
 
 		//StartScene
 		R.LoadTexture<ObjectID::TITOL>("gfx/TITOL.png");

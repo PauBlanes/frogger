@@ -23,7 +23,7 @@ private:
 	Sprite playerSprite;
 	int vides;
 	bool movimentSegur;
-	bool captureInecte;
+	
 	float playerX;
 };
 

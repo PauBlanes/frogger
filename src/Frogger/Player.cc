@@ -8,7 +8,7 @@
 Player::Player() {
 	playerSprite = { { (WIDTH >> 1),HEIGHT-120, WIDTH / 15, 30 },ObjectID::PJBASIC};
 	movimentSegur = false;
-	captureInecte = false;
+	
 	playerX = (float)(WIDTH >> 1);
 }
 
@@ -105,12 +105,13 @@ void Player::DetectRiu( Sprite Riu) {
 		}		
 }
 bool Player::DetectInsecte(Insecto insect) {
-	captureInecte = false;
-	if (playerSprite.transform.y <= insect.insectSprite.transform.y /*>= insect.insectSprite.transform.y && playerSprite.transform.y <= insect.insectSprite.transform.y + insect.insectSprite.transform.h*/
-		&& playerSprite.transform.x + playerSprite.transform.w >= insect.insectSprite.transform.x && playerSprite.transform.x <= insect.insectSprite.transform.x + insect.insectSprite.transform.w
-		) {
-		captureInecte = true;
+	
+	if (playerSprite.transform.y <= insect.insectSprite.transform.y && playerSprite.transform.y <= insect.insectSprite.transform.y + insect.insectSprite.transform.h
+		&& playerSprite.transform.x + playerSprite.transform.w >= insect.insectSprite.transform.x && playerSprite.transform.x <= insect.insectSprite.transform.x + insect.insectSprite.transform.w)
+	{
+		
 		GameScene::score += 200;
+		std::cout << "EIIIIIIIIIIII" << std::endl;
 		playerSprite.transform.x = (WIDTH >> 1);
 		playerSprite.transform.y = HEIGHT - 120;
 		movimentSegur = false;
