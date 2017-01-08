@@ -51,7 +51,7 @@ enum KeyButton : int {
 
 //! Controls all input info and stores it to be used in other pats of the code as a Singleton.
 class InputManager {
-	friend class RankingsScene;
+	
 public:
 	/**
 	 * Creates a Singleton instance of the InputManager class.

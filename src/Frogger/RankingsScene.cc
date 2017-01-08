@@ -23,7 +23,7 @@ void RankingsScene::OnEntry(void) {
 
 void RankingsScene::OnExit(void) {
 	sP = askingUsername;//per si hem entrat des del menu primer
-	
+	userInput = "";
 }
 
 void RankingsScene::Update(void) {
@@ -49,7 +49,7 @@ void RankingsScene::Update(void) {
 	}
 	else if (sP == updatingScore) {
 		UpdateRanking();
-		sP = justDrawing;
+		
 	}
 
 	//Si clickem el botó de retorn al menu
@@ -68,7 +68,7 @@ void RankingsScene::Draw(void) {
 		{ WIDTH / 2, HEIGHT / 2 - 200, 1, 1 },
 		{ 0, 0, 0 }); 
 	}	
-	else if (sP == justDrawing) { //Pintem les puntuacions
+	else if (sP == drawingRanking) { //Pintem les puntuacions
 		
 		GUI::DrawTextBlended<FontID::ARIAL>("TOP 10 PLAYERS ( " + GameScene::difficulty + " )",
 		{ WIDTH / 2, HEIGHT / 2 - 300, 1, 1 },
@@ -82,6 +82,15 @@ void RankingsScene::Draw(void) {
 		}
 	}
 
+	if (sP == etsUnFracassat) { //Pintem el text inicial i el nom que estas escribint
+		GUI::DrawTextBlended<FontID::ARIAL>(userInput + "es un bon nom per",
+		{ WIDTH / 2, HEIGHT / 2, 1, 1 },
+		{ 0, 0, 0 });
+		GUI::DrawTextBlended<FontID::ARIAL>("un jugador professional de parchís...",
+		{ WIDTH / 2, HEIGHT / 2+100, 1, 1 },
+		{ 0, 0, 0 });
+	}
+
 	toMenu.Draw();	
 }
 
@@ -90,11 +99,10 @@ void RankingsScene::UpdateRanking(void) {
 	//Omplim el nou usuari
 	strcpy(newUser.userName, userInput.c_str());
 	newUser.score = GameScene::score;
-	userInput = "A";
-	cout << userInput << endl;
+	
 	//si esta buit omplim amb jugadors model
 	if (highScores.empty()) { 
-		cout << "buit" << endl;
+		
 		for (int i = 10; i > 0;i--) {
 			userRank temp = { "ABC", i };
 			highScores.push_back(temp);
@@ -104,16 +112,16 @@ void RankingsScene::UpdateRanking(void) {
 
 	//escriurem la nostra puntuacio+puntaucions inferiors, així no hem d'escriure les 10 cada vegada	
 	int position = 0; //per saber a partir on haurem d'enviar
-		
+	sP = etsUnFracassat; //si en cap moment tens una puntuació millor que alguna del top10 no entrà al if i no es posarà el mode de pintar la puntuació.
 	for (auto &i : highScores) {
 		if (newUser.score >= i.score) {
 			
 			vector<userRank>::iterator first = highScores.begin(); //+ (position-1)
 			vector<userRank>::iterator last = highScores.begin() + 9; //no ens deixa fer highScors.end()-1, però això serà el mateix
 			vector<userRank> toWrite(first, last); //copiem totes les puntuacions inferiors per escriure a partir d'aqui al fitxer de rankings.
-			toWrite.insert(toWrite.begin() + position, newUser);
-			
+			toWrite.insert(toWrite.begin() + position, newUser);			
 			IOManager::WriteBin("../../res/cfg/", GameScene::difficulty,toWrite, position);
+			sP = drawingRanking;
 		}
 		else
 			position++;

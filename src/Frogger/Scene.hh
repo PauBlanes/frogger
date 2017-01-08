@@ -16,7 +16,7 @@ enum class SceneState {
 
 // Scene class that serves as part of the Model
 class Scene {
-	friend class SceneManager;
+	
 public:
 	explicit Scene() = default;
 	virtual ~Scene() = default;
