@@ -41,6 +41,7 @@ void StartScene::Update(void) {
 		else if (exitButton.ICliked())
 			SDL_Quit();
 		else if (top10Button.ICliked()) {
+			GameScene::difficulty = "hard";
 			RankingsScene::sP = justDrawing;
 			SM.SetCurScene<RankingsScene>();			
 		}

@@ -34,10 +34,12 @@ namespace GameEngine {
 		R.LoadTexture<ObjectID::PMRESTART>("gfx/RestartButton.png");
 		R.LoadTexture<ObjectID::PMRESUME>("gfx/ResumeButton.png");
 		R.LoadTexture<ObjectID::PMTOMENU>("gfx/PMToMenuButton.png");
-
+		//La barra del temps
+		R.LoadTexture<ObjectID::TIMEBAR>("gfx/timeBar.png");
 		//StartScene
 		R.LoadTexture<ObjectID::TITOL>("gfx/TITOL.png");
 		R.LoadTexture<ObjectID::FONDOMENU>("gfx/fondoMenu.png");
+		R.LoadTexture <ObjectID::FONDORANKINGS>("gfx/rankingsFondo.jpg");
 		
 		//GameScene
 		R.LoadTexture<ObjectID::FONDO>("gfx/fondo.png");

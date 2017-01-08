@@ -29,6 +29,7 @@ GameScene::GameScene() {
 	CamiInicial = { { 0,HEIGHT-120-pj.playerSprite.transform.h/2 ,WIDTH, 60 },ObjectID::CAMI };
 	CamiMig = { { 0,HEIGHT - (HEIGHT/16)*6-120- pj.playerSprite.transform.h / 2 ,WIDTH, 60 },ObjectID::CAMI };
 	TERRA = { { 0,75 ,WIDTH, 100 },ObjectID::TERRA };
+	
 
 	//Settejar els contadors per instanciar els vehicles
 	counterLinia1 = 0.5 + rand()%1;
@@ -50,6 +51,8 @@ GameScene::~GameScene(void){
 
 void GameScene::OnEntry(void) {
 	
+	
+
 	//Llegim les dades al xml
 	vector <string> infoXML = IOManager::ReadXML("../../res/cfg/LvLSettings.xml", difficulty);
 	initMultiplierSpeed = atoi(infoXML[0].c_str());
@@ -61,6 +64,10 @@ void GameScene::OnEntry(void) {
 	cout << "Time divider: " <<timeDivider << endl;	
 
 	score = 0;
+
+	//El temporitzador
+	timeCounter = 60/GameScene::timeDivider;
+	timeBar = { { 200, HEIGHT - 60 ,240, 30 },ObjectID::TIMEBAR };
 
 	//Resetegem el jugador
 	pj.playerSprite.transform.x = WIDTH / 2;
@@ -95,7 +102,9 @@ void GameScene::OnEntry(void) {
 	//linia4
 	InsertTronc(300, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 4, 100, 40, (TroncType)(rand() % 3), -1);
 	//linia5
-	InsertTronc(WIDTH - 200, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 5, 100, 40, (TroncType)(rand() % 3), 1);
+	InsertTronc(0, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 5, 100, 40, medium, 1);
+	InsertTronc(350, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 5, 100, 40, medium, 1);
+	InsertTronc(650, CamiMig.transform.y + pj.playerSprite.transform.h / 2 - (HEIGHT / 16) * 5, 100, 40, medium, 1);
 
 
 	//Aquests son les xs dels forats del final
@@ -123,6 +132,18 @@ void GameScene::Update(void) {
 	
 	if (!isPaused) { //aixo ho posem aqui perque volem que nomes funcioni en aquesta escena i sino al apretar esc no podriem clickar botons en altres escenes. També el problema seria que heuriem de tenir la comprovacio del input del esc per pausar aqui i la de despausar en el GameEngine, i ens sembla millor fer-ho tot aqui ja que només ha de funcionar per aquesta escena.
 
+		//Actualitzem el contador de temps
+		if (timeCounter >0)
+			timeCounter -= TM.GetDeltaTime()/1000;
+		else {
+			if (pj.vides > 1)
+				pj.vides--;
+			else
+				pj.Die();
+			timeCounter = 60*GameScene::timeDivider;
+		}
+		timeBar.transform.w = timeCounter*4*GameScene::timeDivider;//aqui tornem a multiplicar epr el divisor perquè volem que les barrres sempre tinguin el mateix tamany, però baixin més ràpid
+		
 		pj.Move();
 		
 		//insertem vehicles fins que hi ha els que toca
@@ -157,13 +178,12 @@ void GameScene::Update(void) {
 				std::cout << pj.playerSprite.transform.x <<" i width " << pj.playerSprite.transform.x + pj.playerSprite.transform.w << std::endl;
 				if (pj.playerSprite.transform.x >= limitRana[i].first && pj.playerSprite.transform.x <= limitRana[i].second) { //comprovem per a cada un dels forats buits				
 					
-					if (pj.DetectInsecte(insect)) {
-						insect.waitTime = 0; //el fem saltar a una altra posicio inmediatament
-						cout << "Hihi" << endl;
-						
+					if (!pj.DetectInsecte(insect)) {
+						score += (50 + timeCounter*10);
+						timeCounter = 60 / GameScene::timeDivider;
 					}
-					else
-						score += 50;
+						
+					
 					
 					InsertGranota(limitRana[i].first, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
 					pj.playerSprite.transform.x = (WIDTH >> 1);
@@ -227,6 +247,7 @@ void GameScene::Draw(void) {
 	TERRA.Draw();
 	CamiInicial.Draw();
 	CamiMig.Draw();
+	timeBar.Draw();
 
 	//Bucle per vehicles
 	for (int i = 0;i < vehicleArray.size();i++) {
@@ -255,7 +276,12 @@ void GameScene::Draw(void) {
 
 	 //pintar les vides
 	 GUI::DrawTextBlended<FontID::ARIAL>("Health: " + std::to_string(pj.vides),
-	 { 100, int(HEIGHT-45), 1, 1 },
+	 { WIDTH-100, int(HEIGHT-45), 1, 1 },
+	 { 255, 0, 0 }); // Render score that will be different when updated
+
+	 //Pintar el temps
+	 GUI::DrawTextBlended<FontID::ARIAL>("TIME: " + std::to_string((int)timeCounter) + "s",
+	 { 95, HEIGHT - 45, 1, 1 },
 	 { 255, 0, 0 }); // Render score that will be different when updated
 	
 	 if (isPaused) {

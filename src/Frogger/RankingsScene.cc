@@ -1,12 +1,13 @@
 #include "RankingsScene.hh"
 #include "IOManager.hh"
 
-
 scenePhase RankingsScene::sP;
 
 RankingsScene::RankingsScene(void) {
 	sP = askingUsername; //ho posem aqui perque aixi si hem de canviar-ho des d'una altra escena per no ahver d'escriure el username no tindrem problemes.
 	toMenu.SetCoords(20, 20,100, 100, ObjectID::TOMENUBUTTON);
+	r_background = { { -150,0, W.GetWidth()+300, W.GetHeight() }, ObjectID::FONDORANKINGS };
+	
 }
 
 RankingsScene::~RankingsScene(void) {
@@ -14,12 +15,14 @@ RankingsScene::~RankingsScene(void) {
 
 void RankingsScene::OnEntry(void) {
 	
-	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin"); //hem de llegir perquè quan tornem a executar el vector estarà buit.
+	highScores = IOManager::ReadBin("../../res/cfg/",GameScene::difficulty); //hem de llegir perquè quan tornem a executar el vector estarà buit.
 	SDL_StartTextInput();
+	
 	
 }
 
 void RankingsScene::OnExit(void) {
+	sP = askingUsername;//per si hem entrat des del menu primer
 	
 }
 
@@ -58,6 +61,8 @@ void RankingsScene::Update(void) {
 
 void RankingsScene::Draw(void) {
 	
+	r_background.Draw();
+
 	if (sP == askingUsername) { //Pintem el text inicial i el nom que estas escribint
 		GUI::DrawTextBlended<FontID::ARIAL>("USERNAME : " + userInput,
 		{ WIDTH / 2, HEIGHT / 2 - 200, 1, 1 },
@@ -65,7 +70,7 @@ void RankingsScene::Draw(void) {
 	}	
 	else if (sP == justDrawing) { //Pintem les puntuacions
 		
-		GUI::DrawTextBlended<FontID::ARIAL>("TOP 10 PLAYERS (EASY)",
+		GUI::DrawTextBlended<FontID::ARIAL>("TOP 10 PLAYERS ( " + GameScene::difficulty + " )",
 		{ WIDTH / 2, HEIGHT / 2 - 300, 1, 1 },
 		{ 0, 0, 0 });
 		
@@ -82,9 +87,11 @@ void RankingsScene::Draw(void) {
 
 void RankingsScene::UpdateRanking(void) {		
 	
+	//Omplim el nou usuari
 	strcpy(newUser.userName, userInput.c_str());
 	newUser.score = GameScene::score;
-		
+	userInput = "A";
+	cout << userInput << endl;
 	//si esta buit omplim amb jugadors model
 	if (highScores.empty()) { 
 		cout << "buit" << endl;
@@ -92,7 +99,7 @@ void RankingsScene::UpdateRanking(void) {
 			userRank temp = { "ABC", i };
 			highScores.push_back(temp);
 		}
-		IOManager::WriteBin("../../res/cfg/rankings.bin", highScores, 1);
+		IOManager::WriteBin("../../res/cfg/",GameScene::difficulty, highScores, 1);
 	}
 
 	//escriurem la nostra puntuacio+puntaucions inferiors, així no hem d'escriure les 10 cada vegada	
@@ -106,13 +113,13 @@ void RankingsScene::UpdateRanking(void) {
 			vector<userRank> toWrite(first, last); //copiem totes les puntuacions inferiors per escriure a partir d'aqui al fitxer de rankings.
 			toWrite.insert(toWrite.begin() + position, newUser);
 			
-			IOManager::WriteBin("../../res/cfg/rankings.bin", toWrite, position);
+			IOManager::WriteBin("../../res/cfg/", GameScene::difficulty,toWrite, position);
 		}
 		else
 			position++;
 	}
 	
-	highScores = IOManager::ReadBin("../../res/cfg/rankings.bin"); //actualitzem per pintar la ultima puntuacio que hem afegit
+	highScores = IOManager::ReadBin("../../res/cfg/", GameScene::difficulty); //actualitzem per pintar la ultima puntuacio que hem afegit
 	
 	
 }

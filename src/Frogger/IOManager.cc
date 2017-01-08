@@ -31,8 +31,10 @@ vector<string> IOManager::ReadXML(string &&filename, string difficulty) {
 	return info;
 }
 
-void IOManager::WriteBin(const string &filename, vector<userRank> highScorers, int rankPos) {
+void IOManager::WriteBin(const string &folder, string &dif, vector<userRank> highScorers, int rankPos) {
 
+	string filename = folder + dif + "Rankings.bin";
+	
 	//int posToInsert = sizeof(userRank) * (rankPos - 1); //la posicio del fitxer on anirà la nova informacio
 	
 	ofstream fsalida(filename, ios::out | ios::binary); //obrim un archiu per escriure en binari ens posem al final per comprovar si hem d'insertar al final
@@ -50,7 +52,9 @@ void IOManager::WriteBin(const string &filename, vector<userRank> highScorers, i
 	}else cout << "Unable to open file for writing\n";
 }
 	
-vector<userRank> IOManager::ReadBin(const string &filename) {
+vector<userRank> IOManager::ReadBin(const string &folder, string &dif) {
+
+	string filename = folder + dif + "Rankings.bin";
 	
 	ifstream fentrada(filename, ios::in | ios::binary); 
 	

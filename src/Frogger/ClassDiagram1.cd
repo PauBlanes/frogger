@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Button" Collapsed="true">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAQAAAgBABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Button.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DifficultyScene" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUAAABAAEAAAgAgAAAAAAAAAAAQAAAAACEAAABAIAA=</HashCode>
+      <FileName>DifficultyScene.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GameScene" Collapsed="true">
+    <Position X="5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGQGAAhBAjAQQgAAhHGIBAUAAohQCCABAAEGAgFQIAA=</HashCode>
+      <FileName>GameScene.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Granota" Collapsed="true">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAgAAAAAAAAAAAAAAQAAAAAAAACAAAAA=</HashCode>
+      <FileName>Granota.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Insecto" Collapsed="true">
+    <Position X="9.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAIAAAgAAAAAQBAAAAAAAQAAAAEABAAAAAAA=</HashCode>
+      <FileName>Insecto.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Player" Collapsed="true">
+    <Position X="13.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAIAAAgAgAAAAAAQBABAAAQgAAIAAAQAAAQA=</HashCode>
+      <FileName>Player.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RankingsScene" Collapsed="true">
+    <Position X="7.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUABAAAAAAAAgAAEAAAkAAAAAAYAgAQAAEAAAAIAAA=</HashCode>
+      <FileName>RankingsScene.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene" Collapsed="true">
+    <Position X="3.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQABEAAAAAAAgAAoAAAAAAAQAAQAAAAAAMAAAAAAAA=</HashCode>
+      <FileName>Scene.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StartScene" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAgAAAgBAIAAAAAAAAABQAAIAAAEAAAQQAAA=</HashCode>
+      <FileName>StartScene.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GUI" Collapsed="true">
+    <Position X="13.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAECIAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GUI.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Tronc" Collapsed="true">
+    <Position X="13.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAIAAIgAAAAAAgAAAAAAAAQAgAAAAIAAAAAA=</HashCode>
+      <FileName>Tronc.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Vehiculo" Collapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAABAAAAIAAIgAAAAAAAAAAAAAAAQQAAAAAAAAAAAA=</HashCode>
+      <FileName>vehiculo.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LadyFrog" Collapsed="true">
+    <Position X="11.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgIAAAAQAAABAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>LadyFrog.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="InputManager" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAAAAAIAFEAAIAIgAICAAICAQAAAFQAAgYAAgAAA=</HashCode>
+      <FileName>InputManager.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SceneManager" Collapsed="true">
+    <Position X="9.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAACAAAQAAQAAAASAAgAIAAAAQ=</HashCode>
+      <FileName>SceneManager.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TimeManager" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAQAQAAAAAAQgAAAEAAAAAAQAAgAAAAAAA=</HashCode>
+      <FileName>TimeManager.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Renderer" Collapsed="true">
+    <Position X="15" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAkAAAAAAAAACAAACAAAAAAAAgAAAEAQBCkAABACAg=</HashCode>
+      <FileName>Renderer.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Window" Collapsed="true">
+    <Position X="9.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAEAAAAABAQQIAAAAAQAAgCEAAJAA=</HashCode>
+      <FileName>Window.hh</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Color" Collapsed="true">
+    <Position X="9.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEEAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <FileName>Color.hh</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="userRank" Collapsed="true">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>RankingsScene.hh</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Sprite" Collapsed="true">
+    <Position X="13.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAAAgAAAAAAAAAAAAAEAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Sprite.hh</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="Transform" Collapsed="true">
+    <Position X="15" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transform.hh</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="MouseCoords" Collapsed="true">
+    <Position X="11.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABiAAAAAAA=</HashCode>
+      <FileName>InputManager.hh</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="FontID" Collapsed="true">
+    <Position X="9.75" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAEAAIAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>ID.hh</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="scenePhase" Collapsed="true">
+    <Position X="9.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABgAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>RankingsScene.hh</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="SceneState" Collapsed="true">
+    <Position X="11.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAAAAAAAAQAACAAAAAAAAAAAAAAAAAAAAQA=</HashCode>
+      <FileName>Scene.hh</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TroncType" Collapsed="true">
+    <Position X="13.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAACAAAAAAAAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Tronc.hh</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="type" Collapsed="true">
+    <Position X="15" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAEAAAAA=</HashCode>
+      <FileName>vehiculo.hh</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="MouseButton" Collapsed="true">
+    <Position X="15" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAIAA=</HashCode>
+      <FileName>InputManager.hh</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="KeyButton" Collapsed="true">
+    <Position X="13.25" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAABAAAAAAIAAAQAAAAAAAJAAACAAACgAAAAQAAIAA=</HashCode>
+      <FileName>InputManager.hh</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="FontStyle" Collapsed="true">
+    <Position X="11.5" Y="7" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAEAAAAAAAAAAAAQAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Renderer.hh</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

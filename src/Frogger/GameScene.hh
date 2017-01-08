@@ -70,6 +70,10 @@ private:
 
 	int nivel;	
 
+	//Contador de temps
+	float timeCounter;
+	Sprite timeBar;
+
 	//Menu de Pausa
 	bool isPaused;//utilitzarem això per pausar el joc
 	Button PMResume;

@@ -31,8 +31,8 @@ namespace IOManager {
 	//Llegir un fitxer xml
 	vector<string> ReadXML(string &&, string );
 	//Escriure a un fitxer binari
-	void WriteBin(const string &, vector<userRank>, int);
+	void WriteBin(const string &,string&, vector<userRank>, int);
 	//Llegir d'un fitxer binari
-	vector <userRank> ReadBin(const string &);
+	vector <userRank> ReadBin(const string &, string&);
 	
 }

@@ -35,5 +35,6 @@ private:
 	
 	std::vector <userRank> highScores;
 
+	Sprite r_background;
 	Button toMenu;
 };

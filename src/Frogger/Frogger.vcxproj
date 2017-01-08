@@ -25,6 +25,7 @@
     <ClCompile Include="Granota.cc" />
     <ClCompile Include="Insecto.cc" />
     <ClCompile Include="IOManager.cc" />
+    <ClCompile Include="LadyFrog.cc" />
     <ClCompile Include="main.cc" />
     <ClCompile Include="Player.cc" />
     <ClCompile Include="RankingsScene.cc" />
@@ -43,6 +44,7 @@
     <ClInclude Include="InputManager.hh" />
     <ClInclude Include="Insecto.hh" />
     <ClInclude Include="IOManager.hh" />
+    <ClInclude Include="LadyFrog.hh" />
     <ClInclude Include="Logger.hh" />
     <ClInclude Include="ID.hh" />
     <ClInclude Include="Player.hh" />
@@ -60,6 +62,10 @@
     <ClInclude Include="Tronc.hh" />
     <ClInclude Include="vehiculo.hh" />
     <ClInclude Include="Window.hh" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{9450E5FA-C335-4BA6-AD40-7AADDBE3DDD6}</ProjectGuid>

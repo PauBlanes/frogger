@@ -3,8 +3,7 @@
 #include "Sprite.hh"
 #include "ID.hh"
 
-class Button {
-	friend class StartScene;//per poder utilitzar el transform i centrar bé els botons
+class Button {	
 public:
 	Button();
 	void SetCoords(int, int, int, int, ObjectID);

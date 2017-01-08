@@ -49,6 +49,9 @@
     <ClCompile Include="IOManager.cc">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="LadyFrog.cc">
+      <Filter>Model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Transform.hh">
@@ -132,5 +135,12 @@
     <ClInclude Include="RankingsScene.hh">
       <Filter>Model</Filter>
     </ClInclude>
+    <ClInclude Include="LadyFrog.hh">
+      <Filter>Model</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

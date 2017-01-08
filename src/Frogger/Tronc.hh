@@ -12,8 +12,9 @@ public:
 	void Draw();
 	void Move();
 
-	Sprite tSprite;
+	
 private:
+	Sprite tSprite;
 	float speed;
 	int direction;
 	float troncX;

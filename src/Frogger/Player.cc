@@ -111,7 +111,7 @@ bool Player::DetectInsecte(Insecto insect) {
 	{
 		
 		GameScene::score += 200;
-		std::cout << "EIIIIIIIIIIII" << std::endl;
+		insect.waitTime = 0; //el fem saltar a una altra posicio inmediatament
 		playerSprite.transform.x = (WIDTH >> 1);
 		playerSprite.transform.y = HEIGHT - 120;
 		movimentSegur = false;
