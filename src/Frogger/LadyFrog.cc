@@ -2,47 +2,44 @@
 
 
 LadyFrog::LadyFrog() {
-	lFSprite = { { WIDTH/2 ,HEIGHT/2, WIDTH / 15, 30 },ObjectID::INSECT };
+	lFSprite = { { WIDTH/2 ,HEIGHT/2, 30, 30 },ObjectID::LADYFROG };
 	waitTime = 0;
-	timeOnScreen = 2;
+	timeOnScreen = 0;
+	state = waiting;
+	
 }
 void LadyFrog::Draw() {
-	if (onScreen)
+	if (state == onScreen)
 		lFSprite.Draw();
 }
 
-void LadyFrog::Spawn() {
-	if (!onScreen) {
+void LadyFrog::Update(Tronc tronc, int troncArraySize) {
+	
+	switch (state)
+	{
+	case waiting:
 		if (waitTime > 0)
 			waitTime -= TM.GetDeltaTime() / 1000;
 		else {
-			lFSprite.transform.x = 100 + rand() % WIDTH - 100;
-			lFSprite.transform.y = 189 + rand() % (HEIGHT / 2 - 189);
-			onScreen = true;
+			state = onScreen;
+			newTroncIndex = rand() % troncArraySize;
 		}
-	}
-	else { 
+		break;
+	case onPlayer:
+		waitTime = 20; //resetegem els valors per quan torni a estar en espera
+		timeOnScreen = 10;
+		break;
+	case onScreen:
 		timeOnScreen -= TM.GetDeltaTime() / 1000;
+
+		//lFSprite.transform.x = tronc.tSprite.transform.x;
+		//lFSprite.transform.y = tronc.tSprite.transform.y;
+
 		if (timeOnScreen <= 0) {
-			waitTime = 5;
-			timeOnScreen = 2;
-			onScreen = false;
+			waitTime = 20;
+			timeOnScreen = 10;
+			state = waiting;
 		}
-	}
-}
-
-bool LadyFrog::DetectTronc(Tronc elTronc) {
-
-
-
-	if (lFSprite.transform.y >= elTronc.tSprite.transform.y && lFSprite.transform.y <= elTronc.tSprite.transform.y + elTronc.tSprite.transform.h
-		&& lFSprite.transform.x >= elTronc.tSprite.transform.x && lFSprite.transform.x <= elTronc.tSprite.transform.x + elTronc.tSprite.transform.w) {
-					
-		//playerX -= elTronc.speed * TM.GetDeltaTime() *elTronc.direction; //per alguna rao si en comptes de posar 0.1 poso speed no va. A més em teletransporta a llocs raros
-		//playerSprite.transform.x = (int)playerX;
-		//2232323
-
-		return true;
-	}
-	return false;
+		break;	
+	}	
 }

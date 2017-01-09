@@ -173,7 +173,6 @@ void GameScene::Update(void) {
 		
 		//aqui comprovem si esta en una casella que no pertany a larray.
 		if (pj.playerSprite.transform.y < 188) { //si esta a la alçada de la pantalla que toca
-			cout << insect.insectSprite.transform.x << " vs Player: " << pj.playerSprite.transform.x << endl;
 			for (int i = 0; i < limitRana.size();i++) { //no podem fer el auto& it pq volem borrar coses
 
 				std::cout << limitRana[i].first << "," << limitRana[i].second << std::endl;
@@ -184,8 +183,11 @@ void GameScene::Update(void) {
 						score += (50 + timeCounter*10);
 						timeCounter = 60 / GameScene::timeDivider;
 					}
-						
-					
+					else score += 200; //si hi ha insecte sumem 200
+
+					if (lF.state == onPlayer) { //si el player porta la lasy frog
+						score += 200;
+					}					
 					
 					InsertGranota(limitRana[i].first, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
 					pj.playerSprite.transform.x = (WIDTH >> 1);
@@ -220,13 +222,15 @@ void GameScene::Update(void) {
 				casellaFinalBona = false;
 		}
 
-		//Un cop he detectat colisons sabre si me mogut a casella segura o no
+		//Un cop hem detectat colisons sabrem si hem mogut a casella segura o no
 		if (pj.movimentSegur && pj.playerSprite.transform.y > 188) {
 			score += 10;
 			pj.movimentSegur = false;
 		}
 
-		lF.Spawn();
+		//Tot lady Frog
+		lF.Update(troncArray[lF.newTroncIndex], troncArray.size());
+		pj.DetectLadyFrog(lF);
 	}
 	else {
 		if (IM.IsMouseUp<MOUSE_BUTTON_LEFT>()) {
@@ -260,6 +264,7 @@ void GameScene::Draw(void) {
 	//Pintar Troncs
 	for (int i = 0;i < troncArray.size();i++) {
 		troncArray[i].Draw();
+		
 	}
 
 	//Pintar L'insecte
@@ -304,7 +309,6 @@ void GameScene::InsertVehicle(int x, int y, int w, int h, ObjectID mySprite, typ
 		vehicleArray.push_back(newV);
 		
 }
-
 void GameScene::InsertTronc(int x, int y, int w, int h, TroncType tipus, int dir) {
 	Tronc newT(x, y, w, h, tipus, dir);
 	troncArray.push_back(newT);

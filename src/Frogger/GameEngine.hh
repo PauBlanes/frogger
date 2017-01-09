@@ -59,6 +59,7 @@ namespace GameEngine {
 		R.LoadTexture<ObjectID::PJBASIC>("gfx/G_S_C.png");
 		R.LoadTexture<ObjectID::INSECT>("gfx/mosquito.png");
 		R.LoadTexture<ObjectID::GRANOTA>("gfx/GRANOTA.png");
+		R.LoadTexture<ObjectID::LADYFROG>("gfx/ladyFrog.png");
 	}
 	//! Adds the game scenes into the Scene Manager and decides which is the first screen
 	void AddScenes(void) {

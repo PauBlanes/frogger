@@ -3,7 +3,7 @@
 #include "vehiculo.hh"
 #include "Tronc.hh"
 #include "Insecto.hh"
-
+#include "LadyFrog.hh"
 
 class  Player
 {
@@ -18,7 +18,7 @@ public:
 	bool DetectTronc(Tronc);
 	void DetectRiu(Sprite);
 	bool DetectInsecte(Insecto);
-	
+	void DetectLadyFrog(LadyFrog);
 private:
 	Sprite playerSprite;
 	int vides;

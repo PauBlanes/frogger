@@ -79,9 +79,10 @@ bool Player::DetectTronc(Tronc elTronc) {
 			playerSprite.transform.x = (int)playerX;
 		}
 		else {
-			//std::cout << playerX << std::endl;			
-			playerX -= elTronc.speed * TM.GetDeltaTime() *elTronc.direction; //per alguna rao si en comptes de posar 0.1 poso speed no va. A més em teletransporta a llocs raros
-			playerSprite.transform.x = (int)playerX;
+			if (playerX > 0 && playerX + playerSprite.transform.w < WIDTH) {
+				playerX -= elTronc.speed * TM.GetDeltaTime() *elTronc.direction;
+				playerSprite.transform.x = (int)playerX;
+			}			
 		}		
 		return true;
 	}
@@ -108,9 +109,8 @@ bool Player::DetectInsecte(Insecto insect) {
 	
 	if (playerSprite.transform.y <= insect.insectSprite.transform.y && playerSprite.transform.y <= insect.insectSprite.transform.y + insect.insectSprite.transform.h
 		&& playerSprite.transform.x + playerSprite.transform.w >= insect.insectSprite.transform.x && playerSprite.transform.x <= insect.insectSprite.transform.x + insect.insectSprite.transform.w)
-	{
+	{		
 		
-		GameScene::score += 200;
 		insect.waitTime = 0; //el fem saltar a una altra posicio inmediatament
 		playerSprite.transform.x = (WIDTH >> 1);
 		playerSprite.transform.y = HEIGHT - 120;
@@ -118,5 +118,20 @@ bool Player::DetectInsecte(Insecto insect) {
 		return true;
 	}
 	return false;
+}
+
+void Player::DetectLadyFrog(LadyFrog lF) {
+
+	std::cout << playerSprite.transform.y << " P F " << lF.lFSprite.transform.y << std::endl;
+	if (playerSprite.transform.y <= lF.lFSprite.transform.y && playerSprite.transform.y <= lF.lFSprite.transform.y + lF.lFSprite.transform.h /*
+		&& playerSprite.transform.x + playerSprite.transform.w >= lF.lFSprite.transform.x && playerSprite.transform.x <= lF.lFSprite.transform.x + lF.lFSprite.transform.w*/)
+	{
+		
+		lF.state = onPlayer;
+		lF.lFSprite.transform.x = playerSprite.transform.x;
+		lF.lFSprite.transform.y = playerSprite.transform.y;
+		
+	}
+	
 }
 

@@ -5,6 +5,9 @@
 #include "System.hh"
 #include"GameScene.hh"
 
+Tronc::Tronc() {
+
+}
 Tronc::Tronc(int x, int y, int w, int h, TroncType tipus, int dir) {
 	troncX = (float)x;
 	switch (tipus)
