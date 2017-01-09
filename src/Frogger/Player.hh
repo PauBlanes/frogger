@@ -24,7 +24,7 @@ private:
 	Sprite playerSprite;
 	int vides;
 	bool movimentSegur;
-	
+	bool unaVidaMenys;//es perque l'insecte desaparegui si mors
 	float playerX;
 };
 

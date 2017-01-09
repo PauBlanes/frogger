@@ -215,6 +215,7 @@ void GameScene::Update(void) {
 					pj.playerSprite.transform.x = (WIDTH >> 1);
 					pj.playerSprite.transform.y = HEIGHT - 120;
 					pj.vides -= 1;
+					pj.unaVidaMenys = true;
 				}
 			}
 			else
@@ -230,11 +231,11 @@ void GameScene::Update(void) {
 		//Tot lady Frog
 		lF.DetectPlayer(pj);
 		lF.Update(troncArray[lF.newTroncIndex], troncArray.size(), pj);
+		pj.unaVidaMenys = false;
 
 		//Mort del personatge
 		if (pj.vides <= 0) {
-			pj.Die();
-			lF.state = waiting;
+			pj.Die();			
 		}
 		
 	}

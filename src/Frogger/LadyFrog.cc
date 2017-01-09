@@ -55,7 +55,9 @@ void LadyFrog::DetectPlayer(Player pj) {
 		timeOnScreen = 10;
 		state = onPlayer;	
 		
-		
+	}
+	if (pj.unaVidaMenys && state == onPlayer) {
+		state = waiting;
 	}
 
 }

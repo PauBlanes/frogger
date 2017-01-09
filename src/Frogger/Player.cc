@@ -8,7 +8,7 @@
 Player::Player() {
 	playerSprite = { { (WIDTH >> 1),HEIGHT-120, WIDTH / 15, 30 },ObjectID::PJBASIC};
 	movimentSegur = false;
-	
+	unaVidaMenys = false;
 	playerX = (float)(WIDTH >> 1);
 }
 
@@ -56,6 +56,7 @@ void Player::DetectVehicle(Vehiculo collider) {
 			playerSprite.transform.x = (WIDTH >> 1);
 			playerSprite.transform.y = HEIGHT - 120;
 			movimentSegur = false;
+			unaVidaMenys = true;
 		}		
 	}	
 }
@@ -95,8 +96,10 @@ void Player::DetectRiu( Sprite Riu) {
 				playerSprite.transform.x = (WIDTH >> 1);
 				playerSprite.transform.y = HEIGHT - 120;
 				movimentSegur = false;
+				unaVidaMenys = true;
 			}			
-		}		
+		}
+		
 }
 bool Player::DetectInsecte(Insecto insect) {
 	

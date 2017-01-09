@@ -40,7 +40,7 @@ void StartScene::Update(void) {
 			SM.SetCurScene<DifficultyScene>();
 		else if (exitButton.ICliked())
 			SDL_Quit();
-		else if (top10Button.ICliked()) {
+		else if (top10Button.ICliked()) { //si entres al ranking des del menu et mostrarà el top10 en mode difícil
 			GameScene::difficulty = "hard";
 			RankingsScene::sP = drawingRanking;
 			SM.SetCurScene<RankingsScene>();			

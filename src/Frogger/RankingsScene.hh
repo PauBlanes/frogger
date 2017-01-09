@@ -15,7 +15,7 @@ struct userRank
 	int score;	
 };
 
-enum scenePhase { askingUsername, updatingScore, etsUnFracassat, drawingRanking}; //el tercer es per no utilitzar un bool i estar fent un update de la score i per tant accedint al fitxer tota la estona
+enum scenePhase { askingUsername, updatingScore, etsUnFracassat, drawingRanking, buit}; //el tercer es per no utilitzar un bool i estar fent un update de la score i per tant accedint al fitxer tota la estona
 
 class RankingsScene : public Scene {
 	
