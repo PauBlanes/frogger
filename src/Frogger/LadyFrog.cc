@@ -40,7 +40,8 @@ bool LadyFrog::DetectTronc(Tronc elTronc) {
 					
 		//playerX -= elTronc.speed * TM.GetDeltaTime() *elTronc.direction; //per alguna rao si en comptes de posar 0.1 poso speed no va. A més em teletransporta a llocs raros
 		//playerSprite.transform.x = (int)playerX;
-		
+		//2232323
+
 		return true;
 	}
 	return false;
