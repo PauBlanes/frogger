@@ -111,12 +111,11 @@ void GameScene::OnEntry(void) {
 	//Aquests son les xs dels forats del final
 	limitRana = { { 20,85 },{ 180,255 },{ 340,415 },{ 500,580 },{ 665,740 } };
 	GranotaArray.clear();//per si sortim de la escena i tornem a entrar des d'una altra
+	RanaNum = 0;
+	casellaFinalBona = false;//aixo ho utilitzem per saber si estema  uan casella final nova o no
 
 	//Insecte
 	insect.insectPositions = { 25,190,355,520,680 };
-	//RanaNum = 0;
-	casellaFinalBona = false;//aixo ens servira per saber si estema  uan casella final nova o no
-	
 
 	//Calculem quants vehicles de cada tipus hi haurà (nosaltres ho fem per linia, és a dir el doble en el cas dels cotxes i rallys.)
 	numCotxes = 3 + nivel % 3;
@@ -183,7 +182,10 @@ void GameScene::Update(void) {
 						score += (50 + timeCounter*10);
 						timeCounter = 60 / GameScene::timeDivider;
 					}
-					else score += 200; //si hi ha insecte sumem 200
+					else { //si hi ha insecte sumem 200
+						score += 200;
+						insect.waitTime = 0; //el fem saltar a una altra posicio inmediatament
+					} 
 
 					if (lF.state == onPlayer) { //si el player porta la lasy frog
 						score += 200;
@@ -214,9 +216,6 @@ void GameScene::Update(void) {
 					pj.playerSprite.transform.y = HEIGHT - 120;
 					pj.vides -= 1;
 				}
-				else
-					pj.Die();
-
 			}
 			else
 				casellaFinalBona = false;
@@ -229,9 +228,17 @@ void GameScene::Update(void) {
 		}
 
 		//Tot lady Frog
-		lF.Update(troncArray[lF.newTroncIndex], troncArray.size());
-		pj.DetectLadyFrog(lF);
+		lF.DetectPlayer(pj);
+		lF.Update(troncArray[lF.newTroncIndex], troncArray.size(), pj);
+
+		//Mort del personatge
+		if (pj.vides <= 0) {
+			pj.Die();
+			lF.state = waiting;
+		}
+		
 	}
+
 	else {
 		if (IM.IsMouseUp<MOUSE_BUTTON_LEFT>()) {
 			if (PMRestart.ICliked()) 

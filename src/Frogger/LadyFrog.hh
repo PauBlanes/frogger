@@ -2,25 +2,24 @@
 #include "Sprite.hh"
 #include "System.hh"
 #include "Tronc.hh"
-
+#include "Player.hh"
 
 enum ladyState {
 	waiting, onPlayer, onScreen
 };
-class LadyFrog {
-	friend class Player; //per que el player pugui accedir al sprite i al contador sense fer-lo public.
+class LadyFrog {	
 	friend class GameScene; //perque el gamescene pugui acecedir al newtroncIndex
 public:
 	LadyFrog();
-	void Update(Tronc, int);
+	void Update(Tronc, int, Player);
 	void Draw();
-	
+	void DetectPlayer(Player);
 protected:
 	Sprite lFSprite;
 
 	float waitTime;	
 	float timeOnScreen;
-
+	int x;
 	ladyState state;
 	
 	int newTroncIndex;

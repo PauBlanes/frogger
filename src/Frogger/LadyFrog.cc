@@ -2,18 +2,18 @@
 
 
 LadyFrog::LadyFrog() {
-	lFSprite = { { WIDTH/2 ,HEIGHT/2, 30, 30 },ObjectID::LADYFROG };
+	lFSprite = { { 0 ,494, 30, 30 },ObjectID::LADYFROG };
 	waitTime = 0;
 	timeOnScreen = 0;
 	state = waiting;
 	
 }
 void LadyFrog::Draw() {
-	if (state == onScreen)
+	if (state == onScreen || state == onPlayer)
 		lFSprite.Draw();
 }
 
-void LadyFrog::Update(Tronc tronc, int troncArraySize) {
+void LadyFrog::Update(Tronc tronc, int troncArraySize, Player pj) {	
 	
 	switch (state)
 	{
@@ -26,15 +26,16 @@ void LadyFrog::Update(Tronc tronc, int troncArraySize) {
 		}
 		break;
 	case onPlayer:
-		waitTime = 20; //resetegem els valors per quan torni a estar en espera
-		timeOnScreen = 10;
+		lFSprite.transform.x = pj.playerSprite.transform.x;
+		lFSprite.transform.y = pj.playerSprite.transform.y;
+		
 		break;
 	case onScreen:
 		timeOnScreen -= TM.GetDeltaTime() / 1000;
 
-		//lFSprite.transform.x = tronc.tSprite.transform.x;
-		//lFSprite.transform.y = tronc.tSprite.transform.y;
-
+		lFSprite.transform.x = tronc.tSprite.transform.x + tronc.tSprite.transform.w/2;
+		lFSprite.transform.y = tronc.tSprite.transform.y;
+		
 		if (timeOnScreen <= 0) {
 			waitTime = 20;
 			timeOnScreen = 10;
@@ -42,4 +43,19 @@ void LadyFrog::Update(Tronc tronc, int troncArraySize) {
 		}
 		break;	
 	}	
+}
+
+void LadyFrog::DetectPlayer(Player pj) {
+	
+	if (lFSprite.transform.y+lFSprite.transform.h >= pj.playerSprite.transform.y && lFSprite.transform.y <= pj.playerSprite.transform.y + pj.playerSprite.transform.h
+		&& lFSprite.transform.x <= pj.playerSprite.transform.x+pj.playerSprite.transform.w && lFSprite.transform.x >= pj.playerSprite.transform.x
+		&& state != waiting)
+	{
+		waitTime = 20; //resetegem els valors per quan torni a estar en espera
+		timeOnScreen = 10;
+		state = onPlayer;	
+		
+		
+	}
+
 }
