@@ -15,6 +15,7 @@
 #include "Insecto.hh"
 #include "Granota.hh"
 #include "Button.hh"
+#include "LadyFrog.hh"
 
 // GameScene class with the main gameplay mode
 class GameScene : public Scene {
@@ -79,5 +80,8 @@ private:
 	Button PMResume;
 	Button PMRestart;
 	Button PMToMenu;
+
+	//LadyFrog
+	LadyFrog lF;
 	
 };

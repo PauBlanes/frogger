@@ -11,7 +11,8 @@
 #include "SceneManager.hh"
 #include "IOManager.hh"
 #include <stdlib.h>    
-#include <time.h> 
+#include <time.h>
+#include "LadyFrog.hh"
 
 using namespace std;
 using namespace Logger;
@@ -144,6 +145,7 @@ void GameScene::Update(void) {
 		}
 		timeBar.transform.w = timeCounter*4*GameScene::timeDivider;//aqui tornem a multiplicar epr el divisor perquè volem que les barrres sempre tinguin el mateix tamany, però baixin més ràpid
 		
+		//Mirem si el personatge es mou
 		pj.Move();
 		
 		//insertem vehicles fins que hi ha els que toca
@@ -223,6 +225,8 @@ void GameScene::Update(void) {
 			score += 10;
 			pj.movimentSegur = false;
 		}
+
+		lF.Spawn();
 	}
 	else {
 		if (IM.IsMouseUp<MOUSE_BUTTON_LEFT>()) {
@@ -284,6 +288,8 @@ void GameScene::Draw(void) {
 	 { 95, HEIGHT - 45, 1, 1 },
 	 { 255, 0, 0 }); // Render score that will be different when updated
 	
+	 lF.Draw();
+
 	 if (isPaused) {
 		 PMResume.Draw();
 		 PMRestart.Draw();

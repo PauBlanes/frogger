@@ -7,6 +7,7 @@ enum TroncType {
 
 class Tronc {
 	friend class Player;
+	friend class LadyFrog;
 public:
 	Tronc(int, int, int, int, TroncType, int);
 	void Draw();
