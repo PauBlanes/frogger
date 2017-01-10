@@ -153,6 +153,10 @@ void GameScene::Update(void) {
 		//movem el insect cada 5 segons
 		insect.Move();
 		
+		//posar la ladyFrog a waiting
+		if (lF.state == onPlayer)
+			lF.state = waiting;
+
 		//Moure vehivles i detectar colisions
 		for (int i = 0;i < vehicleArray.size();i++) {
 			vehicleArray[i].Move();
@@ -173,10 +177,9 @@ void GameScene::Update(void) {
 		//aqui comprovem si esta en una casella que no pertany a larray.
 		if (pj.playerSprite.transform.y < 188) { //si esta a la alçada de la pantalla que toca
 			for (int i = 0; i < limitRana.size();i++) { //no podem fer el auto& it pq volem borrar coses
-
-				std::cout << limitRana[i].first << "," << limitRana[i].second << std::endl;
-				std::cout << pj.playerSprite.transform.x <<" i width " << pj.playerSprite.transform.x + pj.playerSprite.transform.w << std::endl;
-				if (pj.playerSprite.transform.x >= limitRana[i].first && pj.playerSprite.transform.x <= limitRana[i].second) { //comprovem per a cada un dels forats buits				
+				//std::cout << limitRana[i].first << "," << limitRana[i].second << std::endl;
+				//std::cout << pj.playerSprite.transform.x <<" i width " << pj.playerSprite.transform.x + pj.playerSprite.transform.w << std::endl;
+				if (pj.playerSprite.transform.x >= limitRana[i].first && pj.playerSprite.transform.x <= limitRana[i].second && pj.playerSprite.transform.y < 188) { //comprovem per a cada un dels forats buits	i amb la y pq quan tornis al mig no pinti a la tercera casella			
 					
 					if (!pj.DetectInsecte(insect)) {
 						score += (50 + timeCounter*10);
@@ -190,16 +193,16 @@ void GameScene::Update(void) {
 					if (lF.state == onPlayer) { //si el player porta la lasy frog
 						score += 200;
 					}					
-					
-					InsertGranota(limitRana[i].first, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
-					pj.playerSprite.transform.x = (WIDTH >> 1);
-					pj.playerSprite.transform.y = HEIGHT - 120;
-					
-					RanaNum++;
-					casellaFinalBona = true;
+					InsertGranota(limitRana[i].first + 10, 120, WIDTH / 15, 50); //insertem la granota i tornem el pj al principi
 					limitRana.erase(limitRana.begin() + i); //borrem les Xs d'aquest forat perquè ja no sigui segur i moris si hi tornes a entrar
 					insect.insectPositions.erase(insect.insectPositions.begin() + i);//com que aquest array està ordenat igual que el de minX i maxX dels forats podem borrar el mateix index pq l'insecte noe s pinti a caselles on ja hi ha granota.
-					
+										
+					pj.playerSprite.transform.x = (WIDTH >> 1);
+					pj.playerSprite.transform.y = HEIGHT - 120;
+
+					RanaNum++;
+					casellaFinalBona = true;
+
 					if (RanaNum == 5) {
 						score += 1000;
 						RanaNum = 0;
@@ -210,7 +213,7 @@ void GameScene::Update(void) {
 				pj.movimentSegur = false; //no volem que també tinguis els 10 punts per aquest moviment perque ja estàs aconseguint els 50 per arrivar al final
 			}
 
-			if (casellaFinalBona == false) { //hem de posar això fora del for perquè primer comprovi el if amb tots els forats.
+			if (!casellaFinalBona) { //hem de posar això fora del for perquè primer comprovi el if amb tots els forats.
 				if (pj.vides > 0) {
 					pj.playerSprite.transform.x = (WIDTH >> 1);
 					pj.playerSprite.transform.y = HEIGHT - 120;
