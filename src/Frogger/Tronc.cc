@@ -35,7 +35,7 @@ void Tronc::Draw() {
 void Tronc::Move() {
 	
 	//Moure el tronc
-	speed += GameScene::score / 1000; //incremente velocitat en funcio de la score
+	speed += GameScene::score / 3000; //incremente velocitat en funcio de la score
 	troncX -= speed * TM.GetDeltaTime() * direction * GameScene::initMultiplierSpeed;
 	tSprite.transform.x = (int)troncX;
 	

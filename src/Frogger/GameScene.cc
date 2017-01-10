@@ -136,8 +136,12 @@ void GameScene::Update(void) {
 		if (timeCounter >0)
 			timeCounter -= TM.GetDeltaTime()/1000;
 		else {
-			if (pj.vides > 1)
+			if (pj.vides > 1) {
 				pj.vides--;
+				pj.playerSprite.transform.x = (WIDTH >> 1);
+				pj.playerSprite.transform.y = HEIGHT - 120;
+			}
+				
 			else
 				pj.Die();
 			timeCounter = 60*GameScene::timeDivider;

@@ -30,7 +30,7 @@ void Vehiculo::Draw() {
 
 void Vehiculo::Move() {
 	
-	speed += GameScene::score/1000;  //incrementem velocitat en funcio de la score
+	speed += GameScene::score/2000;  //incrementem velocitat en funcio de la score
 	
 	vehicleX -= speed * TM.GetDeltaTime() * direction;
 	vSprite.transform.x = (int)vehicleX;
