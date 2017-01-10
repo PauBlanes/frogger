@@ -11,13 +11,13 @@ Vehiculo::Vehiculo(int x, int y, int w, int h, ObjectID mySprite, type tipo, int
 	switch (tipo)
 	{
 	case coche:
-		speed = 0.1;
-		break;
-	case camion:
 		speed = 0.05;
 		break;
+	case camion:
+		speed = 0.025;
+		break;
 	case rally:
-		speed = 0.3;
+		speed = 0.15;
 		break;	
 	}
 	direction = dir;
@@ -30,9 +30,7 @@ void Vehiculo::Draw() {
 
 void Vehiculo::Move() {
 	
-	speed += GameScene::score/2000;  //incrementem velocitat en funcio de la score
-	
-	vehicleX -= speed * TM.GetDeltaTime() * direction;
+	vehicleX -= (speed * TM.GetDeltaTime() + (float)GameScene::score/900000) * direction;
 	vSprite.transform.x = (int)vehicleX;
 	if (vSprite.transform.x < 0 && direction == 1) {
 		vSprite.transform.x = WIDTH - vSprite.transform.w;

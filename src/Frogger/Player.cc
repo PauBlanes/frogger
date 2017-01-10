@@ -77,7 +77,7 @@ bool Player::DetectTronc(Tronc elTronc) {
 		}
 		else {
 			if (playerX > 0 && playerX + playerSprite.transform.w < WIDTH) {
-				playerX -= elTronc.speed * TM.GetDeltaTime() *elTronc.direction;
+				playerX -= (elTronc.speed * TM.GetDeltaTime() * GameScene::initMultiplierSpeed + (float)GameScene::score/900000)*elTronc.direction;
 				playerSprite.transform.x = (int)playerX;
 			}			
 		}		

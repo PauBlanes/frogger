@@ -130,7 +130,7 @@ void RankingsScene::UpdateRanking(void) {
 	int position = 0; //per saber a partir on haurem d'enviar
 	sP = etsUnFracassat; //si en cap moment tens una puntuació millor que alguna del top10 no entrà al if i no es posarà el mode de pintar la puntuació.
 	for (auto &i : highScores) {
-		cout << newUser.score << " vs " << i.score << endl;
+		
 		if (newUser.score >= i.score) {			
 			vector<userRank>::iterator first = highScores.begin(); //+ (position-1)
 			vector<userRank>::iterator last = highScores.begin() + 9; //no ens deixa fer highScors.end()-1, però això serà el mateix

@@ -23,7 +23,7 @@ Tronc::Tronc(int x, int y, int w, int h, TroncType tipus, int dir) {
 		break;
 	}
 	
-	speed = 0.1;
+	speed = 0.05;
 	direction = dir;
 
 }
@@ -35,8 +35,7 @@ void Tronc::Draw() {
 void Tronc::Move() {
 	
 	//Moure el tronc
-	speed += GameScene::score / 3000; //incremente velocitat en funcio de la score
-	troncX -= speed * TM.GetDeltaTime() * direction * GameScene::initMultiplierSpeed;
+	troncX -= (speed * TM.GetDeltaTime() * GameScene::initMultiplierSpeed + (float)GameScene::score/900000)* direction;
 	tSprite.transform.x = (int)troncX;
 	
 	if (tSprite.transform.x + tSprite.transform.w < 0 && direction == 1) {

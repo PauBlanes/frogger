@@ -181,8 +181,7 @@ void GameScene::Update(void) {
 		//aqui comprovem si esta en una casella que no pertany a larray.
 		if (pj.playerSprite.transform.y < 188) { //si esta a la alçada de la pantalla que toca
 			for (int i = 0; i < limitRana.size();i++) { //no podem fer el auto& it pq volem borrar coses
-				//std::cout << limitRana[i].first << "," << limitRana[i].second << std::endl;
-				//std::cout << pj.playerSprite.transform.x <<" i width " << pj.playerSprite.transform.x + pj.playerSprite.transform.w << std::endl;
+				
 				if (pj.playerSprite.transform.x >= limitRana[i].first && pj.playerSprite.transform.x <= limitRana[i].second && pj.playerSprite.transform.y < 188) { //comprovem per a cada un dels forats buits	i amb la y pq quan tornis al mig no pinti a la tercera casella			
 					
 					if (!pj.DetectInsecte(insect)) {

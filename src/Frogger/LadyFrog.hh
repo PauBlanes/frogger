@@ -19,7 +19,7 @@ protected:
 
 	float waitTime;	
 	float timeOnScreen;
-	int x;
+	
 	ladyState state;
 	
 	int newTroncIndex;
